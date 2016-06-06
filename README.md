@@ -5,13 +5,15 @@
 # ember-keycloak-auth 
 
 ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
-REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). It is intended to ...
- * present the Keycloak JS adapter in a service that can be injected into an EmberJS app, 
- * provide a simple mixin that can be used with Ember Routes to check authentication on transition. 
- * provide a mixin that can be used with Ember data adapters to manage authentication headers whenever calls are made to a Keycloak secured backend via the Ember data framework,
+REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). 
+
+## Features overview
+
+ * presents the Keycloak JS adapter in a service that can be injected into an EmberJS app
+ * provide a simple mixin that can be used with Ember Routes to check authentication on transition
+ * provide a mixin that can be used with Ember data adapters to manage authentication headers whenever calls 
+ are made to a Keycloak secured backend via the Ember data framework
  * a few small utility components for display user login state
- 
- ** This is version 0.1.x
 
 ## Installation
 
@@ -25,7 +27,8 @@ ember install ember-keycloak-auth
 
 ## Running
 
-There is a trivial demo app that allows testing of the service and route mixin. 
+There is a trivial demo app that allows testing of the service and route mixin. Enter the details of your Keycloak server 
+and then navigate around a selection of access protected and unprotected routes.
 
 * `ember server`
 * Visit your app at http://localhost:4200.
@@ -41,3 +44,4 @@ There is a trivial demo app that allows testing of the service and route mixin.
 * `ember build`
 
 For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+For more information on Keycloak, visit [http://keycloak.jboss.com/](http://keycloak.jboss.com/).
