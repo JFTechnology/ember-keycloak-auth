@@ -14,7 +14,6 @@ export default Ember.Service.extend({
    */
   minValidity: 30,
 
-
   /**
    * Bound property to track session state. Indicates that a keycloak session has been successfully created.
    */

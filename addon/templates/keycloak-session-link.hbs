@@ -1,8 +1,8 @@
 {{#if session.ready}}
   {{#if session.authenticated}}
-      <a {{action 'logout'}}><i class="fa fa-sign-out"></i> Sign out</a>
+      <a href="#" {{action 'logout'}}><i class="fa fa-sign-out"></i> Sign out</a>
   {{else}}
-      <a {{action 'login'}}><i class="fa fa-sign-in"></i> Sign in</a>
+      <a href="#" {{action 'login'}}><i class="fa fa-sign-in"></i> Sign in</a>
   {{/if}}
 {{else}}
     No session
