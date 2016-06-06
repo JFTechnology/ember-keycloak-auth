@@ -9,64 +9,101 @@ export default Ember.Service.extend({
 
   name: 'keycloak session',
 
-  validity: 30,
+  /**
+   * Value used in calls to KeyCloak.updateToken(minValidity)
+   */
+  minValidity: 30,
 
-  timestamp: new Date(),
 
-  authenticated: false,
-
+  /**
+   * Bound property to track session state. Indicates that a keycloak session has been successfully created.
+   */
   ready: false,
 
-  loginRoute: 'keycloak.status',
+  /**
+   * Bound property to track session state. Indicates that the session has authenticated.
+   */
+  authenticated: false,
 
-  logoutRoute: 'keycloak.logged-out',
+  /**
+   * Bound property to track session state. Track last activity time.
+   */
+  timestamp: new Date(),
 
+  /**
+   * Default route to transition to after successful login
+   */
+  defaultLoginRoute: 'logged-in',
+
+  /**
+   * Default route to transition to after logout
+   */
+  defaultLogoutRoute: 'logged-out',
+
+  /**
+   * Keycloak.init() option.
+   */
   onLoad: 'check-sso',
 
+  /**
+   * Keycloak.init() option.
+   */
   responseMode: 'fragment',
 
+  /**
+   * Keycloak.init() option.
+   */
   flow: 'standard',
 
+  /**
+   * Keycloak.init() option.
+   */
   checkLoginIframe: false,
 
+  /**
+   * Keycloak.init() option.
+   */
   checkLoginIframeInterval: 5,
 
   /**
-   * Route to use for login redirection
+   * Redirect uri to use for login redirection
    */
-  loginRedirect: Ember.computed('timestamp', 'landingRoute', function () {
+  defaultLoginRedirectUri: Ember.computed('defaultLoginRoute', function () {
 
-    var route = this.get('loginRoute');
-    var router = this.get('routingService.router');
-    var redirectBase = this.get('redirectBase');
-
-    return `${redirectBase}${router.generate(route)}`;
+    return this._defaultRedirectUri('defaultLoginRoute');
   }),
 
   /**
-   * Route to use for logout redirection
+   * Redirect uri to use for logout redirection
    */
-  logoutRedirect: Ember.computed('timestamp', 'loginRoute', function () {
+  defaultLogoutRedirectUri: Ember.computed('defaultLogoutRoute', function () {
 
-    var route = this.get('logoutRoute');
+    return this._defaultRedirectUri('defaultLogoutRoute');
+  }),
+
+  /**
+   * @param defaultRoute - fall back route
+   * @returns {*}
+   * @private
+   */
+  _defaultRedirectUri(defaultRoute) {
+
+    var route = this.get(defaultRoute);
     var router = this.get('routingService.router');
-    var redirectBase = this.get('redirectBase');
 
-    return `${redirectBase}${router.generate(route)}`;
-  }),
+    return `${window.location.origin}${router.generate(route)}`;
+  },
 
-  redirectBase: Ember.computed(function () {
-
-    return `${window.location.origin}`;
-  }),
-
+  /**
+   * @param parameters constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
+   */
   installKeycloak(parameters) {
 
     console.log('Keycloak session :: keycloak');
 
     var self = this;
 
-    var keycloak = Keycloak(parameters);
+    var keycloak = new Keycloak(parameters);
 
     keycloak.onReady = function (authenticated) {
       console.log('onReady ' + authenticated);
@@ -159,18 +196,18 @@ export default Ember.Service.extend({
 
     // console.log(`Keycloak session :: updateToken`);
 
-    var validity = this.get('validity');
-    var keycloak = Ember.Application.keycloak;
+    var minValidity = this.get('minValidity');
+    var keycloak = this.get('keycloak');
 
     return new Promise(function (resolve, reject) {
 
-      keycloak.updateToken(validity)
+      keycloak.updateToken(minValidity)
         .success(function (refreshed) {
           // console.log(`update token resolved as success refreshed='${refreshed}'`);
           resolve(refreshed);
         })
-        .error(function (reason) {
-          console.log('update token resolved as error ' + reason);
+        .error(function () {
+          console.log('update token resolved as error');
           reject(new Error('authentication token update failed'));
         });
     });
@@ -181,59 +218,67 @@ export default Ember.Service.extend({
     var self = this;
     var routingService = this.get('routingService');
     var router = this.get('routingService.router');
+    var parser = this._parseRedirectUrl;
 
     return this.updateToken().then(null, function (reason) {
 
-      /**
-       * First check the intent for an explicit url
-       */
-      var url = transition.intent.url;
+      console.log(`Keycloak session :: checkTransition :: update token failed reason='${reason}'`);
 
+      var redirectUri = parser(routingService, router, transition);
 
-      if (url) {
-
-        url = router.location.formatURL(url);
-        console.log(`Keycloak session :: checkTransition :: intent url = ${url} reason=${reason}`);
-
-      } else {
-        /**
-         * If no explicit url try to generate one
-         */
-        url = routingService.generateURL(transition.targetName, transition.intent.contexts, transition.queryParams);
-        console.log(`Keycloak session :: checkTransition :: generated url = ${url} reason=${reason}`);
-      }
-
-      url = `${window.location.origin}${url}`;
-
-      return self._doLogin({'redirectUri': url});
+      return self.login(redirectUri);
     });
   },
 
-  login() {
+  /**
+   * Parses the redirect url from the intended route of a transition. WARNING : this relies on private methods in an
+   * undocumented class.
+   *
+   * @param routingService
+   * @param router
+   * @param transition
+   * @returns URL to include as the Keycloak redirect
+   * @private
+   */
+  _parseRedirectUrl(routingService, router, transition) {
 
-    var redirectUri = this.get('loginRedirect');
+    /**
+     * First check the intent for an explicit url
+     */
+    var url = transition.intent.url;
 
-    console.log('Keycloak session :: login ' + redirectUri);
+    if (url) {
 
-    var options = {};
+      url = router.location.formatURL(url);
+      console.log(`Keycloak session :: parsing explicit intent URL from transition :: '${url}'`);
 
-    if (redirectUri) {
-      options['redirectUri'] = redirectUri;
+    } else {
+
+      /**
+       * If no explicit url try to generate one
+       */
+      url = routingService.generateURL(transition.targetName, transition.intent.contexts, transition.queryParams);
+      console.log(`Keycloak session :: parsing implicit intent URL from transition :: '${url}'`);
     }
 
-    return this._doLogin(options);
+    return `${window.location.origin}${url}`;
   },
 
-  _doLogin(options) {
+  /**
+   * @param url optional redirect url - if not present the
+   */
+  login(url) {
 
+    var redirectUri = url || this.get('defaultLoginRedirectUri');
     var keycloak = this.get('keycloak');
+    var options = {redirectUri};
 
-    console.log('Keycloak session :: login ' + options);
+    console.log('Keycloak session :: login :: ' + JSON.stringify(options));
 
     return new Promise(function (resolve, reject) {
 
       keycloak.login(options).success(function () {
-        console.log('success');
+        console.log('Keycloak session :: login :: success');
         resolve('login OK');
       }).error(function () {
         console.log('login error - this should never be possible');
@@ -242,28 +287,26 @@ export default Ember.Service.extend({
     });
   },
 
-  logout() {
+  /**
+   * @param url optional redirect url - if not present the
+   */
+  logout(url) {
 
-    console.log('Keycloak session :: logout');
-
-    var redirectUri = this.get('logoutRedirect');
+    var redirectUri = url || this.get('defaultLogoutRedirectUri');
     var keycloak = this.get('keycloak');
+    var options = {redirectUri};
 
-    console.log('Keycloak session :: logout ' + redirectUri);
-
-    var options = {};
-
-    if (redirectUri) {
-      options['redirectUri'] = redirectUri;
-    }
+    console.log('Keycloak session :: logout :: ' + JSON.stringify(options));
 
     return new Promise(function (resolve, reject) {
 
       keycloak.logout(options).success(function () {
-        console.log('success');
+        console.log('Keycloak session :: logout :: success');
+        keycloak.clearToken();
         resolve('logout OK');
       }).error(function () {
         console.log('logout error - this should never be possible');
+        keycloak.clearToken();
         reject(new Error('logout failed'));
       });
     });

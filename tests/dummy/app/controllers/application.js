@@ -28,14 +28,21 @@ export default Ember.Controller.extend({
       Ember.$.cookie('keycloak-realm', realm);
       Ember.$.cookie('keycloak-clientId', clientId);
 
-      var options = {
-        url,
-        realm,
-        clientId
-      };
+      if(url && realm && clientId) {
 
-      session.installKeycloak(options);
-      session.initKeycloak();
-    }
+        var options = {
+          url,
+          realm,
+          clientId
+        };
+
+        session.installKeycloak(options);
+        session.initKeycloak();
+
+      } else {
+
+        alert("Config details incomplete");
+      }
+     }
   }
 });

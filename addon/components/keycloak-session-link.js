@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from './template';
+import layout from '../templates/keycloak-session-link';
 
 export default Ember.Component.extend({
 
@@ -8,11 +8,6 @@ export default Ember.Component.extend({
   session: Ember.inject.service('keycloak-session'),
 
   actions: {
-    refresh() {
-      this.get('session').updateToken().then(function (result) {
-        console.log(result);
-      });
-    },
     login() {
       this.get('session').login();
     },

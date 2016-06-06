@@ -7,11 +7,9 @@ const Router = Ember.Router.extend({
 
 Router.map(function () {
 
-  this.route('keycloak', function () {
-    this.route('login');
-    this.route('status');
-    this.route('logged-out');
-  });
+  this.route('status');
+  this.route('logged-out');
+  this.route('logged-in');
 
   this.route('unprotected');
   this.route('protected');

@@ -6,7 +6,7 @@ import KeycloakAuthenticatedRouteMixin from 'ember-keycloak/mixins/keycloak-auth
 
 export default Ember.Route.extend(KeycloakAuthenticatedRouteMixin, {
 
-  model: function (params, transition) {
+  model: function (params) {
 
     console.log(`Protected 2 route ${Object.keys(params)}`);
   }

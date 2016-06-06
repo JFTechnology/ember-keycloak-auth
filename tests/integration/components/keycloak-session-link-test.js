@@ -11,14 +11,14 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{keycloak-session-link}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'No session');
 
   // Template block usage:
   this.render(hbs`
     {{#keycloak-session-link}}
-      template block text
+      xyz
     {{/keycloak-session-link}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'No session');
 });

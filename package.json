@@ -1,6 +1,6 @@
 {
   "name": "ember-keycloak",
-  "version": "0.9.0",
+  "version": "0.1.0",
   "description": "Integration of Keycloak JS",
   "directories": {
     "doc": "doc",

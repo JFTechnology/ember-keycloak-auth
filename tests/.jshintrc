@@ -1,5 +1,7 @@
 {
   "predef": [
+    "Keycloak",
+    "alert",
     "document",
     "window",
     "location",

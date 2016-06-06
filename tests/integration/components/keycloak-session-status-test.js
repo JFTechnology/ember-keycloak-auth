@@ -5,20 +5,20 @@ moduleForComponent('keycloak-session-status', 'Integration | Component | keycloa
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.render(hbs`{{keycloak-session-status}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'No session');
 
   // Template block usage:
   this.render(hbs`
     {{#keycloak-session-status}}
-      template block text
+      xyz
     {{/keycloak-session-status}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'No session');
 });
