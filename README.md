@@ -20,7 +20,7 @@ Ember Power Select works in Ember **1.13.9+** or **2.0+**, including beta and ca
 Run:
 
 ```
-ember install ember-power-select
+ember install ember-keycloak-auth
 ```
 
 ## Running
