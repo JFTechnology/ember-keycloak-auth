@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import KeycloakAdapterMixin from 'ember-keycloak/mixins/keycloak-adapter';
+import KeycloakAdapterMixin from 'ember-keycloak-auth/mixins/keycloak-adapter';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | keycloak adapter mixin');

@@ -1,5 +1,5 @@
 {
-  "name": "ember-keycloak",
+  "name": "ember-keycloak-auth",
   "version": "0.1.0",
   "description": "Integration of Keycloak JS",
   "directories": {

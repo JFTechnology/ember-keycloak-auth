@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import KeycloakAuthenticatedRouteMixin from 'ember-keycloak/mixins/keycloak-authenticated-route';
+import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | keycloak authenticated route mixin');

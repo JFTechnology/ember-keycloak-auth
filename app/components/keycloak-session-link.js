@@ -1,1 +1,1 @@
-export { default } from 'ember-keycloak/components/keycloak-session-link';
+export { default } from 'ember-keycloak-auth/components/keycloak-session-link';
