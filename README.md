@@ -1,4 +1,4 @@
-# ember-keycloak-auth
+# ember-keycloak-auth [![Build Status](https://travis-ci.org/JFTechnology/ember-keycloak-auth.svg)](https://travis-ci.org/JFTechnology/ember-keycloak-auth)
 
 ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
 REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). It is intended to ...
