@@ -1,4 +1,8 @@
-# ember-keycloak-auth [![Build Status](https://travis-ci.org/JFTechnology/ember-keycloak-auth.svg)](https://travis-ci.org/JFTechnology/ember-keycloak-auth)
+[![Build Status](https://travis-ci.org/JFTechnology/ember-keycloak-auth.svg)](https://travis-ci.org/JFTechnology/ember-keycloak-auth)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-keycloak-auth.svg)](http://emberobserver.com/addons/ember-keycloak-auth)
+[![npm version](https://badge.fury.io/js/ember-keycloak-auth.svg)](https://badge.fury.io/js/ember-keycloak-uath)
+
+# ember-keycloak-auth 
 
 ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
 REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). It is intended to ...
@@ -11,9 +15,13 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+Ember Power Select works in Ember **1.13.9+** or **2.0+**, including beta and canary.
+
+Run:
+
+```
+ember install ember-power-select
+```
 
 ## Running
 
