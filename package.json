@@ -1,6 +1,6 @@
 {
   "name": "ember-keycloak-auth",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Keycloak JS Adapter as an Ember service and utilities",
   "directories": {
     "doc": "doc",
