@@ -29,16 +29,6 @@ ember install ember-keycloak-auth
 
 ## Usage
 
-### Load the keycloak.js adapter
-
-First make sure that the keycloak.js is present. Simplest way to do this is to 
-grab it from your keycloak server by adding something like this to your app's index.html ... 
-
-app/index.html
-```
-    <script src="https://auth.my-server.com/auth/js/keycloak.js"></script>
-```
-
 ### Initialising the service
 
 Next the keycloak service needs to be initialised. One obvious place to do this would be in the application route...

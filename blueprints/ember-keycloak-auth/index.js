@@ -2,12 +2,12 @@
 
 module.exports = {
 
-  description: 'ember-keycloack-auth',
+  description: 'ember-keycloak-auth',
 
   afterInstall: function () {
 
     return this.addBowerPackagesToProject([
-      { name: 'keycloack' }
+      { name: 'keycloak' }
     ]);
 
   }

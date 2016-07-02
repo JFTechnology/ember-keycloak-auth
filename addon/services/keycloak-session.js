@@ -35,29 +35,34 @@ export default Ember.Service.extend({
   defaultLoginRoute: 'logged-in',
 
   /**
-   * Default route to transition to after logout
+   * Default route to transition to after logout. This will be used to calculate the redirectUri
+   * parameter used when calling Keycloak.logout() when no explicit value is given. This only has
+   * effect when the onLoad init option is set to 'check-sso'.
    */
   defaultLogoutRoute: 'logged-out',
 
   /**
-   * Keycloak.init() option.
+   * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'.
+   * See http://www.keycloak.org/documentation.html for complete details.
    */
-  onLoad: 'check-sso',
+  onLoad: 'login-required',
 
   /**
-   * Keycloak.init() option.
+   * Keycloak.init() option. Should be one of 'query' or 'fragment'.
+   * See http://www.keycloak.org/documentation.html for complete details.
    */
   responseMode: 'fragment',
 
   /**
-   * Keycloak.init() option.
+   * Keycloak.init() option. Should be one of 'standard', 'implicit' or 'hybrid'.
+   * See http://www.keycloak.org/documentation.html for complete details.
    */
   flow: 'standard',
 
   /**
    * Keycloak.init() option.
    */
-  checkLoginIframe: false,
+  checkLoginIframe: true,
 
   /**
    * Keycloak.init() option.
@@ -133,6 +138,7 @@ export default Ember.Service.extend({
       console.log('onAuthRefreshError');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
+      keycloak.clearToken();
     };
 
     keycloak.onTokenExpired = function () {
@@ -156,13 +162,13 @@ export default Ember.Service.extend({
     console.log('Keycloak session :: prepare');
 
     var keycloak = this.get('keycloak');
-    var options = {};
+    var options = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
 
-    options['onLoad'] = this.get('onLoad');
-    options['responseMode'] = this.get('responseMode');
-    options['checkLoginIframe'] = this.get('checkLoginIframe');
-    options['checkLoginIframeInterval'] = this.get('checkLoginIframeInterval');
-    options['flow'] = this.get('flow');
+    //options['onLoad'] = this.get('onLoad');
+    //options['responseMode'] = this.get('responseMode');
+    //options['checkLoginIframe'] = this.get('checkLoginIframe');
+    //options['checkLoginIframeInterval'] = this.get('checkLoginIframeInterval');
+    //options['flow'] = this.get('flow');
 
     return new Promise(function (resolve, reject) {
       keycloak.init(options)
