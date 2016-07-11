@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
-const {RSVP} = Ember;
-const {Promise} = RSVP;
+const { RSVP, inject, Service, computed, Application } = Ember;
+const { Promise } = RSVP;
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-  routingService: Ember.inject.service('-routing'),
+  routingService: inject.service('-routing'),
 
   name: 'keycloak session',
 
@@ -72,7 +72,7 @@ export default Ember.Service.extend({
   /**
    * Redirect uri to use for login redirection
    */
-  defaultLoginRedirectUri: Ember.computed('defaultLoginRoute', function () {
+  defaultLoginRedirectUri: computed('defaultLoginRoute', function () {
 
     return this._defaultRedirectUri('defaultLoginRoute');
   }),
@@ -80,7 +80,7 @@ export default Ember.Service.extend({
   /**
    * Redirect uri to use for logout redirection
    */
-  defaultLogoutRedirectUri: Ember.computed('defaultLogoutRoute', function () {
+  defaultLogoutRedirectUri: computed('defaultLogoutRoute', function () {
 
     return this._defaultRedirectUri('defaultLogoutRoute');
   }),
@@ -152,7 +152,7 @@ export default Ember.Service.extend({
       self.set('timestamp', new Date());
     };
 
-    Ember.Application.keycloak = keycloak;
+    Application.keycloak = keycloak;
 
     console.log('Keycloak session :: init :: completed');
   },
@@ -181,20 +181,20 @@ export default Ember.Service.extend({
     });
   },
 
-  keycloak: Ember.computed('timestamp', function () {
-    return Ember.Application.keycloak;
+  keycloak: computed('timestamp', function () {
+    return Application.keycloak;
   }),
 
-  subject: Ember.computed('timestamp', function () {
-    return Ember.Application.keycloak.subject;
+  subject: computed('timestamp', function () {
+    return Application.keycloak.subject;
   }),
 
-  refreshToken: Ember.computed('timestamp', function () {
-    return Ember.Application.keycloak.refreshToken;
+  refreshToken: computed('timestamp', function () {
+    return Application.keycloak.refreshToken;
   }),
 
-  token: Ember.computed('timestamp', function () {
-    return Ember.Application.keycloak.token;
+  token: computed('timestamp', function () {
+    return Application.keycloak.token;
   }),
 
   updateToken(){

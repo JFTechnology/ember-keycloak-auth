@@ -1,11 +1,13 @@
 import Ember from 'ember';
 import layout from '../templates/keycloak-session-status';
 
-export default Ember.Component.extend({
+const { inject, Component } = Ember;
+
+export default Component.extend({
 
   layout,
 
-  session: Ember.inject.service('keycloak-session'),
+  session: inject.service('keycloak-session'),
 
   actions: {
     refresh() {
