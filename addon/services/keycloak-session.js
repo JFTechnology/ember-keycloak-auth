@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { RSVP, inject, Service, computed, Application } = Ember;
+const { RSVP, inject, Service, computed, Application, Logger } = Ember;
 const { Promise } = RSVP;
 
 export default Service.extend({
@@ -103,63 +103,63 @@ export default Service.extend({
    */
   installKeycloak(parameters) {
 
-    console.log('Keycloak session :: keycloak');
+    Logger.debug('Keycloak session :: keycloak');
 
     var self = this;
 
     var keycloak = new Keycloak(parameters);
 
     keycloak.onReady = function (authenticated) {
-      console.log('onReady ' + authenticated);
+      Logger.debug('onReady ' + authenticated);
       self.set('ready', true);
       self.set('authenticated', authenticated);
       self.set('timestamp', new Date());
     };
 
     keycloak.onAuthSuccess = function () {
-      console.log('onAuthSuccess');
+      Logger.debug('onAuthSuccess');
       self.set('authenticated', true);
       self.set('timestamp', new Date());
     };
 
     keycloak.onAuthError = function () {
-      console.log('onAuthError');
+      Logger.debug('onAuthError');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
     };
 
     keycloak.onAuthRefreshSuccess = function () {
-      console.log('onAuthRefreshSuccess');
+      Logger.debug('onAuthRefreshSuccess');
       self.set('authenticated', true);
       self.set('timestamp', new Date());
     };
 
     keycloak.onAuthRefreshError = function () {
-      console.log('onAuthRefreshError');
+      Logger.debug('onAuthRefreshError');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
       keycloak.clearToken();
     };
 
     keycloak.onTokenExpired = function () {
-      console.log('onTokenExpired');
+      Logger.debug('onTokenExpired');
       self.set('timestamp', new Date());
     };
 
     keycloak.onAuthLogout = function () {
-      console.log('onAuthLogout');
+      Logger.debug('onAuthLogout');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
     };
 
     Application.keycloak = keycloak;
 
-    console.log('Keycloak session :: init :: completed');
+    Logger.debug('Keycloak session :: init :: completed');
   },
 
   initKeycloak() {
 
-    console.log('Keycloak session :: prepare');
+    Logger.debug('Keycloak session :: prepare');
 
     var keycloak = this.get('keycloak');
     var options = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
@@ -199,7 +199,7 @@ export default Service.extend({
 
   updateToken(){
 
-    // console.log(`Keycloak session :: updateToken`);
+    // Logger.debug(`Keycloak session :: updateToken`);
 
     var minValidity = this.get('minValidity');
     var keycloak = this.get('keycloak');
@@ -208,11 +208,11 @@ export default Service.extend({
 
       keycloak.updateToken(minValidity)
         .success(function (refreshed) {
-          // console.log(`update token resolved as success refreshed='${refreshed}'`);
+          // Logger.debug(`update token resolved as success refreshed='${refreshed}'`);
           resolve(refreshed);
         })
         .error(function () {
-          console.log('update token resolved as error');
+          Logger.debug('update token resolved as error');
           reject(new Error('authentication token update failed'));
         });
     });
@@ -227,7 +227,7 @@ export default Service.extend({
 
     return this.updateToken().then(null, function (reason) {
 
-      console.log(`Keycloak session :: checkTransition :: update token failed reason='${reason}'`);
+      Logger.debug(`Keycloak session :: checkTransition :: update token failed reason='${reason}'`);
 
       var redirectUri = parser(routingService, router, transition);
 
@@ -255,7 +255,7 @@ export default Service.extend({
     if (url) {
 
       url = router.location.formatURL(url);
-      console.log(`Keycloak session :: parsing explicit intent URL from transition :: '${url}'`);
+      Logger.debug(`Keycloak session :: parsing explicit intent URL from transition :: '${url}'`);
 
     } else {
 
@@ -263,7 +263,7 @@ export default Service.extend({
        * If no explicit url try to generate one
        */
       url = routingService.generateURL(transition.targetName, transition.intent.contexts, transition.queryParams);
-      console.log(`Keycloak session :: parsing implicit intent URL from transition :: '${url}'`);
+      Logger.debug(`Keycloak session :: parsing implicit intent URL from transition :: '${url}'`);
     }
 
     return `${window.location.origin}${url}`;
@@ -278,15 +278,15 @@ export default Service.extend({
     var keycloak = this.get('keycloak');
     var options = {redirectUri};
 
-    console.log('Keycloak session :: login :: ' + JSON.stringify(options));
+    Logger.debug('Keycloak session :: login :: ' + JSON.stringify(options));
 
     return new Promise(function (resolve, reject) {
 
       keycloak.login(options).success(function () {
-        console.log('Keycloak session :: login :: success');
+        Logger.debug('Keycloak session :: login :: success');
         resolve('login OK');
       }).error(function () {
-        console.log('login error - this should never be possible');
+        Logger.debug('login error - this should never be possible');
         reject(new Error('login failed'));
       });
     });
@@ -301,16 +301,16 @@ export default Service.extend({
     var keycloak = this.get('keycloak');
     var options = {redirectUri};
 
-    console.log('Keycloak session :: logout :: ' + JSON.stringify(options));
+    Logger.debug('Keycloak session :: logout :: ' + JSON.stringify(options));
 
     return new Promise(function (resolve, reject) {
 
       keycloak.logout(options).success(function () {
-        console.log('Keycloak session :: logout :: success');
+        Logger.debug('Keycloak session :: logout :: success');
         keycloak.clearToken();
         resolve('logout OK');
       }).error(function () {
-        console.log('logout error - this should never be possible');
+        Logger.debug('logout error - this should never be possible');
         keycloak.clearToken();
         reject(new Error('logout failed'));
       });

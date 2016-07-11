@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/keycloak-session-status';
 
-const { inject, Component } = Ember;
+const { inject, Component, Logger } = Ember;
 
 export default Component.extend({
 
@@ -12,7 +12,7 @@ export default Component.extend({
   actions: {
     refresh() {
       this.get('session').updateToken().then(function (result) {
-        console.log(result);
+        Logger.debug(result);
       });
     },
     login() {

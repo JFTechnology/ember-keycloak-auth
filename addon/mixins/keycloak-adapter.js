@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject, computed, Mixin } = Ember;
+const { inject, computed, Mixin, Logger } = Ember;
 
 /**
  * Ember Mixin that can be combined with an ember-data adapter. It is intended to..
@@ -45,7 +45,7 @@ export default Mixin.create({
       },
 
       function (reason) {
-        console.log("Keycloak adapter mixin :: ajax :: rejected :: " + reason);
+        Logger.error("Keycloak adapter mixin :: ajax :: rejected :: " + reason);
         throw reason;
       });
   }
