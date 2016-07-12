@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/keycloak-session-status';
+import layout from '../templates/components/keycloak-session-status';
 
 const { inject, Component, Logger } = Ember;
 

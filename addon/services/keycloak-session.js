@@ -269,6 +269,17 @@ export default Service.extend({
     return `${window.location.origin}${url}`;
   },
 
+  loadUserProfile() {
+
+    var self = this;
+
+    this.get('keycloak').loadUserProfile().success(function (profile) {
+
+      Logger.debug(`Loaded profile for ${profile.id}`);
+      self.set('profile', profile);
+    });
+  },
+
   /**
    * @param url optional redirect url - if not present the
    */

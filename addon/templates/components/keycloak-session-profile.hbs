@@ -1,0 +1,28 @@
+{{#if session.ready}}
+
+    <div style="padding:1rem;">
+        <button type="button" {{action 'loadUserProfile'}} class="btn btn-info">Load user profile</button>
+    </div>
+
+    {{#with session.profile as |profile|}}
+
+        <table class='table'>
+            <tr>
+                <th>Id</th>
+                <td class="text-nowrap">{{profile.id}}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td class="text-nowrap">{{profile.username}}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td class="text-nowrap">{{profile.email}}</td>
+            </tr>
+        </table>
+
+    {{/with}}
+
+{{else}}
+    No session
+{{/if}}

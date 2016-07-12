@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/keycloak-session-link';
+import layout from '../templates/components/keycloak-session-profile';
 
 const { inject, Component } = Ember;
 
@@ -10,11 +10,8 @@ export default Component.extend({
   session: inject.service('keycloak-session'),
 
   actions: {
-    login() {
-      this.get('session').login();
-    },
-    logout() {
-      this.get('session').logout();
+    loadUserProfile() {
+      this.get('session').loadUserProfile();
     }
   }
 });
