@@ -11,11 +11,11 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
 
 ## Features overview
 
- * presents the Keycloak JS adapter in a service that can be injected into an EmberJS app
- * provide a simple mixin that can be used with Ember Routes to check authentication on transition
- * provide a mixin that can be used with Ember data adapters to manage authentication headers whenever calls 
- are made to a Keycloak secured backend via the Ember data framework
- * a few small utility components for display user login state
+ * Presents the Keycloak JS adapter in a service that can be injected into an EmberJS app.
+ * Provides a mixin that can be used with Ember Routes to check authentication on transition.
+ * Provides a mixin that can be used with Ember data adapters to manage authentication headers whenever calls 
+ are made to a Keycloak secured backend via the Ember data framework.
+ * Small utility components for displaying user login state.
 
 ## Installation
 
@@ -33,8 +33,9 @@ ember install ember-keycloak-auth
 
 Next the keycloak service needs to be initialised. One obvious place to do this would be in the application route...
 
-app/routes/application.js
 ```
+
+// app/routes/application.js
 
   session: Ember.inject.service('keycloak-session'),
 
@@ -89,8 +90,9 @@ export default Ember.Route.extend(KeycloakAuthenticatedRouteMixin, {
 Adding the keycloak-adapter mixin ensures that all ember-data calls to your 
 back-end service will contain an HTTP Authentication header.
 
-app/adapters/application.js
 ```
+// app/adapters/application.js
+
 import JSONAPIAdapter from 'ember-data/adapters/json-api';
 import KeycloakAdapterMixin from 'ember-keycloak-auth/mixins/keycloak-adapter';
 
