@@ -39,7 +39,7 @@ Next the keycloak service needs to be initialised. One obvious place to do this 
 
   session: Ember.inject.service('keycloak-session'),
 
-  init: function () {
+  beforeModel: function () {
 
     this._super(...arguments);
 
@@ -58,8 +58,8 @@ Next the keycloak service needs to be initialised. One obvious place to do this 
       // set any keycloak init parameters where defaults need to be overidden
       session.set('responseMode', 'fragment');
       
-      // finally init the service
-      session.initKeycloak();
+      // finally init the service and return promise to pause router.
+      return session.initKeycloak();
   
   }
 ```
