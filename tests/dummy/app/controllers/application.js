@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 
     initKeycloak() {
 
-      var session = this.get('session');
+      let session = this.get('session');
 
       let url = this.get('url');
       let realm = this.get('realm');
@@ -28,12 +28,12 @@ export default Ember.Controller.extend({
       Ember.$.cookie('keycloak-realm', realm);
       Ember.$.cookie('keycloak-clientId', clientId);
 
-      if(url && realm && clientId) {
+      if (url && realm && clientId) {
 
-        var options = {
+        let options = {
           url,
           realm,
-          clientId
+          clientId,
         };
 
         session.installKeycloak(options);
@@ -41,8 +41,8 @@ export default Ember.Controller.extend({
 
       } else {
 
-        alert("Config details incomplete");
+        alert('Config details incomplete');
       }
-     }
-  }
+    },
+  },
 });

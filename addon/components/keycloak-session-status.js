@@ -11,7 +11,7 @@ export default Component.extend({
 
   actions: {
     refresh() {
-      this.get('session').updateToken().then(function (result) {
+      this.get('session').updateToken().then(result => {
         Logger.debug(result);
       });
     },
@@ -20,6 +20,6 @@ export default Component.extend({
     },
     logout() {
       this.get('session').logout();
-    }
-  }
+    },
+  },
 });

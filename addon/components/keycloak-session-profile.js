@@ -12,6 +12,6 @@ export default Component.extend({
   actions: {
     loadUserProfile() {
       this.get('session').loadUserProfile();
-    }
-  }
+    },
+  },
 });

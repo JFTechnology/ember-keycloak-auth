@@ -12,13 +12,13 @@ export default Mixin.create({
 
   session: inject.service('keycloak-session'),
 
-  headers: computed(function () {
+  headers: computed(function() {
 
-    var session = this.get('session');
-    var keycloak = session.get('keycloak');
+    let session = this.get('session');
+    let keycloak = session.get('keycloak');
 
     return {
-      'Authorization': `Bearer ${keycloak['token']}`
+      'Authorization': `Bearer ${keycloak['token']}`,
     };
 
   }).volatile(),
@@ -31,23 +31,22 @@ export default Mixin.create({
    */
   ajax(url, type, hash) {
 
-    var self = this;
-    var ajax = this._super;
+    let self = this;
+    let ajax = this._super;
 
-    var session = this.get('session');
+    let session = this.get('session');
 
     return session.updateToken().then(
-      function () {
+      () =>
         /**
          * We have a valid token - call the super method
          */
-        return ajax.apply(self, [url, type, hash]);
-      },
+         ajax.apply(self, [url, type, hash]),
 
-      function (reason) {
-        Logger.error("Keycloak adapter mixin :: ajax :: rejected :: " + reason);
+      reason => {
+        Logger.error(`Keycloak adapter mixin :: ajax :: rejected :: ${reason}`);
         throw reason;
       });
-  }
+  },
 
 });

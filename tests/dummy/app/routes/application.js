@@ -7,7 +7,7 @@ export default Ember.Route.extend({
 
   session: Ember.inject.service('keycloak-session'),
 
-  init: function () {
+  init() {
 
     this._super(...arguments);
 
@@ -19,17 +19,17 @@ export default Ember.Route.extend({
 
     if (url && realm && clientId) {
 
-      var session = this.get('session');
+      let session = this.get('session');
 
-      var options = {
+      let options = {
         url,
         realm,
-        clientId
+        clientId,
       };
 
       session.installKeycloak(options);
       session.initKeycloak();
     }
-  }
+  },
 
 });

@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('keycloak-session-link', 'Integration | Component | keycloak session link', {
-  integration: true
+  integration: true,
 });
 
 test('it renders', function(assert) {

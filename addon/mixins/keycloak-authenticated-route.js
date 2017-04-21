@@ -11,12 +11,12 @@ export default Mixin.create({
 
   session: inject.service('keycloak-session'),
 
-  beforeModel(transition){
+  beforeModel(transition) {
 
     this._super(...arguments);
 
-    var session = this.get('session');
+    let session = this.get('session');
 
     return session.checkTransition(transition);
-  }
+  },
 });

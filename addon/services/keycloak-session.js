@@ -72,7 +72,7 @@ export default Service.extend({
   /**
    * Redirect uri to use for login redirection
    */
-  defaultLoginRedirectUri: computed('defaultLoginRoute', function () {
+  defaultLoginRedirectUri: computed('defaultLoginRoute', function() {
 
     return this._defaultRedirectUri('defaultLoginRoute');
   }),
@@ -80,7 +80,7 @@ export default Service.extend({
   /**
    * Redirect uri to use for logout redirection
    */
-  defaultLogoutRedirectUri: computed('defaultLogoutRoute', function () {
+  defaultLogoutRedirectUri: computed('defaultLogoutRoute', function() {
 
     return this._defaultRedirectUri('defaultLogoutRoute');
   }),
@@ -92,8 +92,8 @@ export default Service.extend({
    */
   _defaultRedirectUri(defaultRoute) {
 
-    var route = this.get(defaultRoute);
-    var router = this.get('routingService.router');
+    let route = this.get(defaultRoute);
+    let router = this.get('routingService.router');
 
     return `${window.location.origin}${router.generate(route)}`;
   },
@@ -105,49 +105,49 @@ export default Service.extend({
 
     Logger.debug('Keycloak session :: keycloak');
 
-    var self = this;
+    let self = this;
 
-    var keycloak = new Keycloak(parameters);
+    let keycloak = new Keycloak(parameters);
 
-    keycloak.onReady = function (authenticated) {
-      Logger.debug('onReady ' + authenticated);
+    keycloak.onReady = function(authenticated) {
+      Logger.debug(`onReady ${authenticated}`);
       self.set('ready', true);
       self.set('authenticated', authenticated);
       self.set('timestamp', new Date());
     };
 
-    keycloak.onAuthSuccess = function () {
+    keycloak.onAuthSuccess = function() {
       Logger.debug('onAuthSuccess');
       self.set('authenticated', true);
       self.set('timestamp', new Date());
     };
 
-    keycloak.onAuthError = function () {
+    keycloak.onAuthError = function() {
       Logger.debug('onAuthError');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
     };
 
-    keycloak.onAuthRefreshSuccess = function () {
+    keycloak.onAuthRefreshSuccess = function() {
       Logger.debug('onAuthRefreshSuccess');
       self.set('authenticated', true);
       self.set('timestamp', new Date());
     };
 
-    keycloak.onAuthRefreshError = function () {
+    keycloak.onAuthRefreshError = function() {
       Logger.debug('onAuthRefreshError');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
       keycloak.clearToken();
     };
 
-    keycloak.onTokenExpired = function () {
+    keycloak.onTokenExpired = function() {
       Logger.debug('onTokenExpired');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
     };
 
-    keycloak.onAuthLogout = function () {
+    keycloak.onAuthLogout = function() {
       Logger.debug('onAuthLogout');
       self.set('authenticated', false);
       self.set('timestamp', new Date());
@@ -162,8 +162,8 @@ export default Service.extend({
 
     Logger.debug('Keycloak session :: prepare');
 
-    var keycloak = this.get('keycloak');
-    var options = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
+    let keycloak = this.get('keycloak');
+    let options = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
 
     //options['onLoad'] = this.get('onLoad');
     //options['responseMode'] = this.get('responseMode');
@@ -171,66 +171,58 @@ export default Service.extend({
     //options['checkLoginIframeInterval'] = this.get('checkLoginIframeInterval');
     //options['flow'] = this.get('flow');
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       keycloak.init(options)
-        .success(function (authenticated) {
+        .success(authenticated => {
           resolve(authenticated);
         })
-        .error(function (reason) {
+        .error(reason => {
           reject(reason);
         });
     });
   },
 
-  keycloak: computed('timestamp', function () {
-    return Application.keycloak;
-  }),
+  keycloak: computed('timestamp', () => Application.keycloak),
 
-  subject: computed('timestamp', function () {
-    return Application.keycloak.subject;
-  }),
+  subject: computed('timestamp', () => Application.keycloak.subject),
 
-  refreshToken: computed('timestamp', function () {
-    return Application.keycloak.refreshToken;
-  }),
+  refreshToken: computed('timestamp', () => Application.keycloak.refreshToken),
 
-  token: computed('timestamp', function () {
-    return Application.keycloak.token;
-  }),
+  token: computed('timestamp', () => Application.keycloak.token),
 
-  updateToken(){
+  updateToken() {
 
     // Logger.debug(`Keycloak session :: updateToken`);
 
-    var minValidity = this.get('minValidity');
-    var keycloak = this.get('keycloak');
+    let minValidity = this.get('minValidity');
+    let keycloak = this.get('keycloak');
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
 
       keycloak.updateToken(minValidity)
-        .success(function (refreshed) {
+        .success(refreshed => {
           // Logger.debug(`update token resolved as success refreshed='${refreshed}'`);
           resolve(refreshed);
         })
-        .error(function () {
+        .error(() => {
           Logger.debug('update token resolved as error');
           reject(new Error('authentication token update failed'));
         });
     });
   },
 
-  checkTransition(transition){
+  checkTransition(transition) {
 
-    var self = this;
-    var routingService = this.get('routingService');
-    var router = this.get('routingService.router');
-    var parser = this._parseRedirectUrl;
+    let self = this;
+    let routingService = this.get('routingService');
+    let router = this.get('routingService.router');
+    let parser = this._parseRedirectUrl;
 
-    return this.updateToken().then(null, function (reason) {
+    return this.updateToken().then(null, reason => {
 
       Logger.debug(`Keycloak session :: checkTransition :: update token failed reason='${reason}'`);
 
-      var redirectUri = parser(routingService, router, transition);
+      let redirectUri = parser(routingService, router, transition);
 
       return self.login(redirectUri);
     });
@@ -251,7 +243,7 @@ export default Service.extend({
     /**
      * First check the intent for an explicit url
      */
-    var url = transition.intent.url;
+    let url = transition.intent.url;
 
     if (url) {
 
@@ -272,9 +264,9 @@ export default Service.extend({
 
   loadUserProfile() {
 
-    var self = this;
+    let self = this;
 
-    this.get('keycloak').loadUserProfile().success(function (profile) {
+    this.get('keycloak').loadUserProfile().success(profile => {
 
       Logger.debug(`Loaded profile for ${profile.id}`);
       self.set('profile', profile);
@@ -286,18 +278,18 @@ export default Service.extend({
    */
   login(url) {
 
-    var redirectUri = url || this.get('defaultLoginRedirectUri');
-    var keycloak = this.get('keycloak');
-    var options = {redirectUri};
+    let redirectUri = url || this.get('defaultLoginRedirectUri');
+    let keycloak = this.get('keycloak');
+    let options = { redirectUri };
 
-    Logger.debug('Keycloak session :: login :: ' + JSON.stringify(options));
+    Logger.debug(`Keycloak session :: login :: ${JSON.stringify(options)}`);
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
 
-      keycloak.login(options).success(function () {
+      keycloak.login(options).success(() => {
         Logger.debug('Keycloak session :: login :: success');
         resolve('login OK');
-      }).error(function () {
+      }).error(() => {
         Logger.debug('login error - this should never be possible');
         reject(new Error('login failed'));
       });
@@ -309,23 +301,23 @@ export default Service.extend({
    */
   logout(url) {
 
-    var redirectUri = url || this.get('defaultLogoutRedirectUri');
-    var keycloak = this.get('keycloak');
-    var options = {redirectUri};
+    let redirectUri = url || this.get('defaultLogoutRedirectUri');
+    let keycloak = this.get('keycloak');
+    let options = { redirectUri };
 
-    Logger.debug('Keycloak session :: logout :: ' + JSON.stringify(options));
+    Logger.debug(`Keycloak session :: logout :: ${JSON.stringify(options)}`);
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
 
-      keycloak.logout(options).success(function () {
+      keycloak.logout(options).success(() => {
         Logger.debug('Keycloak session :: logout :: success');
         keycloak.clearToken();
         resolve('logout OK');
-      }).error(function () {
+      }).error(() => {
         Logger.debug('logout error - this should never be possible');
         keycloak.clearToken();
         reject(new Error('logout failed'));
       });
     });
-  }
+  },
 });

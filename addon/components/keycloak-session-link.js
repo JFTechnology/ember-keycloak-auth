@@ -15,6 +15,6 @@ export default Component.extend({
     },
     logout() {
       this.get('session').logout();
-    }
-  }
+    },
+  },
 });
