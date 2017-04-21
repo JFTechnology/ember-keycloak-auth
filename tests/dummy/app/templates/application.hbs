@@ -1,41 +1,41 @@
 <div class="container" style="margin-top: 2em;">
 
-    <div class="row">
-        <div class="col-xs-5">
-            <div class="form bg-info" style="padding: 2em;">
-                <div class="form-group">
-                    <label>Keycloak server URL</label>
-                  {{input value=url class='form-control' placeholder='https://www.my-keycloak-server.com/auth'}}
-                </div>
-                <div class="form-group">
-                    <label>Realm</label>
-                  {{input value=realm class='form-control' placeholder='my-realm'}}
-                </div>
-                <div class="form-group">
-                    <label>Client Id</label>
-                  {{input value=clientId class='form-control' placeholder='my-client-id'}}
-                </div>
-                <button {{action 'initKeycloak'}} class="btn btn-block btn-primary">Store keycloak parameters</button>
-            </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="form bg-info" style="padding: 2em;">
+        <div class="form-group">
+          <label>Keycloak server URL</label>
+          {{input value=url class='form-control' placeholder='https://www.my-keycloak-server.com/auth'}}
         </div>
-        <div class="col-xs-5">
-            <ul>
-                <li>{{#link-to 'status'}}Status {{/link-to}}</li>
-                <li>{{#link-to 'protected'}}Protected {{/link-to}}</li>
-                <li>{{#link-to 'protected-1' 1}}Protected 1{{/link-to}}</li>
-                <li>{{#link-to 'protected-1.protected-2' 1 2}} Protected 2 {{/link-to}}</li>
-                <li>{{#link-to 'unprotected'}} Unprotected {{/link-to}}</li>
-            </ul>
-
-          {{outlet}}
-
+        <div class="form-group">
+          <label>Realm</label>
+          {{input value=realm class='form-control' placeholder='my-realm'}}
         </div>
-        <div class="col-xs-2">
-            <div style="height: 24px; padding: 8px; display: inline-block; float: right;">
-              {{keycloak-session-link}}
-            </div>
+        <div class="form-group">
+          <label>Client Id</label>
+          {{input value=clientId class='form-control' placeholder='my-client-id'}}
         </div>
+        <button {{action 'initKeycloak'}} class="btn btn-block btn-primary">Store keycloak parameters</button>
+      </div>
     </div>
+    <div class="col-6">
+      <ul>
+        <li>{{#link-to 'status'}}Status {{/link-to}}</li>
+        <li>{{#link-to 'protected'}}Protected {{/link-to}}</li>
+        <li>{{#link-to 'protected-1' 1}}Protected 1{{/link-to}}</li>
+        <li>{{#link-to 'protected-1.protected-2' 1 2}} Protected 2 {{/link-to}}</li>
+        <li>{{#link-to 'unprotected'}} Unprotected {{/link-to}}</li>
+      </ul>
+
+      {{outlet}}
+
+    </div>
+    <div class="col-2">
+      <div style="height: 24px; padding: 8px; display: inline-block; float: right;">
+        {{keycloak-session-link}}
+      </div>
+    </div>
+  </div>
 
 </div>
 
