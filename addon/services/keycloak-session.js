@@ -143,6 +143,7 @@ export default Service.extend({
 
     keycloak.onTokenExpired = function () {
       Logger.debug('onTokenExpired');
+      self.set('authenticated', false);
       self.set('timestamp', new Date());
     };
 
