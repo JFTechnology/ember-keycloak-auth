@@ -1,3 +1,5 @@
+/*global Keycloak*/
+/*eslint no-undef: "error"*/
 import Ember from 'ember';
 
 const { RSVP, inject, Service, computed, Application, Logger } = Ember;
