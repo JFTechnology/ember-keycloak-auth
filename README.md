@@ -3,8 +3,9 @@
 [![npm version](https://badge.fury.io/js/ember-keycloak-auth.svg)](https://badge.fury.io/js/ember-keycloak-auth)
 [![Dependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth)
 [![devDependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth/dev-status.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth#info=devDependencies)
-
 # ember-keycloak-auth 
+
+This README outlines the details of collaborating on this Ember addon.
 
 ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
 REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). 
@@ -19,7 +20,9 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
 
 ## Installation
 
-ember-keycloak-auth works in Ember **1.13.9+** or **2.0+**, including beta and canary.
+* `git clone <repository-url>` this repository
+* `cd ember-keycloak-auth`
+* `npm install`
 
 Run:
 
@@ -111,12 +114,12 @@ export default JSONAPIAdapter.extend(KeycloakAdapterMixin, {
 There is a trivial demo app that allows testing of the service and route mixin. Enter the details of your Keycloak server 
 and then navigate around a selection of access protected and unprotected routes.
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `ember serve`
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ## Running Tests
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
+* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
@@ -124,5 +127,5 @@ and then navigate around a selection of access protected and unprotected routes.
 
 * `ember build`
 
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 For more information on Keycloak, visit [http://keycloak.jboss.com/](http://keycloak.jboss.com/).
