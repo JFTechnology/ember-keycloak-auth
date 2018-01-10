@@ -1,11 +1,13 @@
 /**
  *
  */
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject } from '@ember/service';
+import $ from 'jquery';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
-  session: Ember.inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   init() {
 
@@ -13,9 +15,9 @@ export default Ember.Route.extend({
 
     // if required constuctor parameters are available as cookies go ahead in init the service.
     // this would be replaced by initialization code when used in an application
-    let url = Ember.$.cookie('keycloak-url');
-    let realm = Ember.$.cookie('keycloak-realm');
-    let clientId = Ember.$.cookie('keycloak-clientId');
+    let url = $.cookie('keycloak-url');
+    let realm = $.cookie('keycloak-realm');
+    let clientId = $.cookie('keycloak-clientId');
 
     if (url && realm && clientId) {
 

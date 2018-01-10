@@ -1,10 +1,10 @@
 /**
  *
  */
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
 
-export default Ember.Route.extend(KeycloakAuthenticatedRouteMixin, {
+export default Route.extend(KeycloakAuthenticatedRouteMixin, {
 
   model(params) {
 

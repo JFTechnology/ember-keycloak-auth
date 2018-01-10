@@ -40,7 +40,7 @@ Next the keycloak service needs to be initialised. One obvious place to do this 
 
 // app/routes/application.js
 
-  session: Ember.inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   beforeModel: function () {
 
@@ -74,10 +74,10 @@ will check that the keycloak instance is authenticated and that you obtained a f
 token.
 
 ```
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
 
-export default Ember.Route.extend(KeycloakAuthenticatedRouteMixin, {
+export default Route.extend(KeycloakAuthenticatedRouteMixin, {
 
   model: function (params) {
 
