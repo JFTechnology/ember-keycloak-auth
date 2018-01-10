@@ -22,7 +22,7 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
 
 * `git clone <repository-url>` this repository
 * `cd ember-keycloak-auth`
-* `npm install`
+* `yarn install`
 
 Run:
 
@@ -119,7 +119,7 @@ and then navigate around a selection of access protected and unprotected routes.
 
 ## Running Tests
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
+* `yarn test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
