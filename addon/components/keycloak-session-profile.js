@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, get, set } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/keycloak-session-profile';
 
@@ -14,8 +14,6 @@ export default Component.extend({
   roles: computed('token', function() {
 
     const token = get(this, 'session.tokenParsed');
-
-    console.log(JSON.stringify(token, null, 2));
 
     const array = [];
 

@@ -2,7 +2,7 @@
  *
  */
 import Route from '@ember/routing/route';
-import {   get, set } from '@ember/object';
+import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Cookies from 'ember-cli-js-cookie';
 
@@ -22,7 +22,7 @@ export default Route.extend({
 
     if (url && realm && clientId) {
 
-      let session = this.get('session');
+      let session = get(this, 'session');
 
       let options = {
         url,
@@ -31,14 +31,7 @@ export default Route.extend({
       };
 
       session.installKeycloak(options);
-      session.initKeycloak().then(() => {
-
-        const keycloakSession = get(this, 'session');
-        const token = get(keycloakSession, 'keycloak').tokenParsed;
-
-        console.log(token);
-
-      });
+      session.initKeycloak();
     }
   },
 });

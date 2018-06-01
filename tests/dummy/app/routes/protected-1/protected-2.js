@@ -4,11 +4,4 @@
 import Route from '@ember/routing/route';
 import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
 
-export default Route.extend(KeycloakAuthenticatedRouteMixin, {
-
-  model(params) {
-
-    console.log(`Protected 2 route ${Object.keys(params)}`);
-  },
-
-});
+export default Route.extend(KeycloakAuthenticatedRouteMixin, {});

@@ -2,7 +2,6 @@
  *
  */
 import Controller from '@ember/controller';
-import { computed, get, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Cookies from 'ember-cli-js-cookie';
 
