@@ -1,2 +1,1 @@
-dist/
-tmp/
+/blueprints/*/files/**/*.js
