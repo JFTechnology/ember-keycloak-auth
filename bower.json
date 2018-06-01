@@ -1,6 +1,6 @@
 {
   "name": "ember-keycloak-auth",
   "dependencies": {
-    "keycloak": "~2.0.0"
+    "keycloak": "^3.1.0"
   }
 }
