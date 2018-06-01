@@ -1,17 +1,16 @@
 /*global Keycloak*/
 /*eslint no-undef: "error"*/
-import RSVP from 'rsvp';
-import Service from '@ember/service';
-import { inject } from '@ember/service';
-import { computed } from '@ember/object';
 import Application from '@ember/application';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
 import { debug } from '@ember/debug';
+import Service, { inject as service } from '@ember/service';
 
 const { Promise } = RSVP;
 
 export default Service.extend({
 
-  routingService: inject('-routing'),
+  routingService: service('-routing'),
 
   name: 'keycloak session',
 
@@ -154,6 +153,8 @@ export default Service.extend({
   refreshToken: computed('timestamp', () => Application.keycloak.refreshToken),
 
   token: computed('timestamp', () => Application.keycloak.token),
+
+  tokenParsed: computed('timestamp', () => Application.keycloak.tokenParsed),
 
   updateToken() {
 
