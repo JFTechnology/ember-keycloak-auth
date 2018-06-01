@@ -36,18 +36,6 @@ export default Service.extend({
   timestamp: null,
 
   /**
-   * Default route to transition to after successful login
-   */
-  defaultLoginRoute: 'logged-in',
-
-  /**
-   * Default route to transition to after logout. This will be used to calculate the redirectUri
-   * parameter used when calling Keycloak.logout() when no explicit value is given. This only has
-   * effect when the onLoad init option is set to 'check-sso'.
-   */
-  defaultLogoutRoute: 'logged-out',
-
-  /**
    * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'.
    * See http://www.keycloak.org/documentation.html for complete details.
    */
@@ -74,35 +62,6 @@ export default Service.extend({
    * Keycloak.init() option.
    */
   checkLoginIframeInterval: 5,
-
-  /**
-   * Redirect uri to use for login redirection
-   */
-  defaultLoginRedirectUri: computed('defaultLoginRoute', function() {
-
-    return this._defaultRedirectUri('defaultLoginRoute');
-  }),
-
-  /**
-   * Redirect uri to use for logout redirection
-   */
-  defaultLogoutRedirectUri: computed('defaultLogoutRoute', function() {
-
-    return this._defaultRedirectUri('defaultLogoutRoute');
-  }),
-
-  /**
-   * @param defaultRoute - fall back route
-   * @returns {*}
-   * @private
-   */
-  _defaultRedirectUri(defaultRoute) {
-
-    let route = this.get(defaultRoute);
-    let router = this.get('routingService.router');
-
-    return `${window.location.origin}${router.generate(route)}`;
-  },
 
   /**
    * @param parameters constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
@@ -284,9 +243,8 @@ export default Service.extend({
    */
   login(url) {
 
-    let redirectUri = url || this.get('defaultLoginRedirectUri');
     let keycloak = this.get('keycloak');
-    let options = { redirectUri };
+    let options = { url };
 
     debug(`Keycloak session :: login :: ${JSON.stringify(options)}`);
 
@@ -307,9 +265,8 @@ export default Service.extend({
    */
   logout(url) {
 
-    let redirectUri = url || this.get('defaultLogoutRedirectUri');
     let keycloak = this.get('keycloak');
-    let options = { redirectUri };
+    let options = { url };
 
     debug(`Keycloak session :: logout :: ${JSON.stringify(options)}`);
 
