@@ -2,18 +2,19 @@
  *
  */
 import Controller from '@ember/controller';
-import { inject } from '@ember/service';
-import $ from 'jquery';
+import { computed, get, set } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Cookies from 'ember-cli-js-cookie';
 
 export default Controller.extend({
 
-  session: inject('keycloak-session'),
+  session: service('keycloak-session'),
 
-  url: $.cookie('keycloak-url'),
+  url: Cookies.get('keycloak-url'),
 
-  realm: $.cookie('keycloak-realm'),
+  realm: Cookies.get('keycloak-realm'),
 
-  clientId: $.cookie('keycloak-clientId'),
+  clientId: Cookies.get('keycloak-clientId'),
 
   actions: {
 
@@ -26,9 +27,9 @@ export default Controller.extend({
       let clientId = this.get('clientId');
 
       // save details as cookies for subsequent initializations
-      $.cookie('keycloak-url', url);
-      $.cookie('keycloak-realm', realm);
-      $.cookie('keycloak-clientId', clientId);
+      Cookies.set('keycloak-url', url);
+      Cookies.set('keycloak-realm', realm);
+      Cookies.set('keycloak-clientId', clientId);
 
       if (url && realm && clientId) {
 

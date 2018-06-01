@@ -2,12 +2,13 @@
  *
  */
 import Route from '@ember/routing/route';
-import { inject } from '@ember/service';
-import $ from 'jquery';
+import {   get, set } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Cookies from 'ember-cli-js-cookie';
 
 export default Route.extend({
 
-  session: inject('keycloak-session'),
+  session: service('keycloak-session'),
 
   init() {
 
@@ -15,9 +16,9 @@ export default Route.extend({
 
     // if required constuctor parameters are available as cookies go ahead in init the service.
     // this would be replaced by initialization code when used in an application
-    let url = $.cookie('keycloak-url');
-    let realm = $.cookie('keycloak-realm');
-    let clientId = $.cookie('keycloak-clientId');
+    let url = Cookies.get('keycloak-url');
+    let realm = Cookies.get('keycloak-realm');
+    let clientId = Cookies.get('keycloak-clientId');
 
     if (url && realm && clientId) {
 
@@ -30,8 +31,14 @@ export default Route.extend({
       };
 
       session.installKeycloak(options);
-      session.initKeycloak();
+      session.initKeycloak().then(() => {
+
+        const keycloakSession = get(this, 'session');
+        const token = get(keycloakSession, 'keycloak').tokenParsed;
+
+        console.log(token);
+
+      });
     }
   },
-
 });
