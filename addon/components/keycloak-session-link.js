@@ -1,13 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject } from '@ember/service';
 import layout from '../templates/components/keycloak-session-link';
-
-const { inject, Component } = Ember;
 
 export default Component.extend({
 
   layout,
 
-  session: inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   actions: {
     login() {

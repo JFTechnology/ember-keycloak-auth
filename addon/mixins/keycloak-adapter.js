@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { inject, computed, Mixin, Logger } = Ember;
+import Mixin from '@ember/object/mixin';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
+import { debug } from '@ember/debug';
 
 /**
  * Ember Mixin that can be combined with an ember-data adapter. It is intended to..
@@ -10,7 +11,7 @@ const { inject, computed, Mixin, Logger } = Ember;
  */
 export default Mixin.create({
 
-  session: inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   headers: computed(function() {
 
@@ -41,10 +42,10 @@ export default Mixin.create({
         /**
          * We have a valid token - call the super method
          */
-         ajax.apply(self, [url, type, hash]),
+        ajax.apply(self, [url, type, hash]),
 
       reason => {
-        Logger.error(`Keycloak adapter mixin :: ajax :: rejected :: ${reason}`);
+        debug(`Keycloak adapter mixin :: ajax :: rejected :: ${reason}`);
         throw reason;
       });
   },

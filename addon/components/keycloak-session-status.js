@@ -1,18 +1,18 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+import { debug } from '@ember/debug';
 import layout from '../templates/components/keycloak-session-status';
-
-const { inject, Component, Logger } = Ember;
 
 export default Component.extend({
 
   layout,
 
-  session: inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   actions: {
     refresh() {
       this.get('session').updateToken().then(result => {
-        Logger.debug(result);
+        debug(result);
       });
     },
     login() {

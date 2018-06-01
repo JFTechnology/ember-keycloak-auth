@@ -1,17 +1,19 @@
 /**
  *
  */
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
+import $ from 'jquery';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
-  session: Ember.inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
-  url: Ember.$.cookie('keycloak-url'),
+  url: $.cookie('keycloak-url'),
 
-  realm: Ember.$.cookie('keycloak-realm'),
+  realm: $.cookie('keycloak-realm'),
 
-  clientId: Ember.$.cookie('keycloak-clientId'),
+  clientId: $.cookie('keycloak-clientId'),
 
   actions: {
 
@@ -24,9 +26,9 @@ export default Ember.Controller.extend({
       let clientId = this.get('clientId');
 
       // save details as cookies for subsequent initializations
-      Ember.$.cookie('keycloak-url', url);
-      Ember.$.cookie('keycloak-realm', realm);
-      Ember.$.cookie('keycloak-clientId', clientId);
+      $.cookie('keycloak-url', url);
+      $.cookie('keycloak-realm', realm);
+      $.cookie('keycloak-clientId', clientId);
 
       if (url && realm && clientId) {
 

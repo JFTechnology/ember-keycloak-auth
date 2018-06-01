@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { inject, Mixin } = Ember;
+import Mixin from '@ember/object/mixin';
+import { inject } from '@ember/service';
 
 /**
  * Ember Mixin that can be combined with an ember route. It is intended to check that the keycloak session is fresh
@@ -9,7 +8,7 @@ const { inject, Mixin } = Ember;
  */
 export default Mixin.create({
 
-  session: inject.service('keycloak-session'),
+  session: inject('keycloak-session'),
 
   beforeModel(transition) {
 
