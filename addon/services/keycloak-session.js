@@ -156,6 +156,14 @@ export default Service.extend({
 
   tokenParsed: computed('timestamp', () => Application.keycloak.tokenParsed),
 
+  hasRealmRole(role) {
+    return Application.keycloak.hasRealmRole(role);
+  },
+
+  hasResourceRole(role, resource) { //If resource is null then clientId is used
+    return Application.keycloak.hasResourceRole(role, resource);
+  },
+  
   updateToken() {
 
     // debug(`Keycloak session :: updateToken`);
