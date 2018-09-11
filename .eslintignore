@@ -1,1 +1,9 @@
-/blueprints/*/files/**/*.js
+/blueprints/*/files/
+/vendor/
+
+# compiled output
+/dist/
+/tmp/
+
+# dependencies
+/bower_components/
