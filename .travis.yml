@@ -31,6 +31,7 @@ jobs:
       name: "Tests"
       install:
         - yarn install --non-interactive
+        - bower install
       script:
         - yarn lint:hbs
         - yarn lint:js
