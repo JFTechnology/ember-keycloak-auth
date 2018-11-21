@@ -115,7 +115,7 @@ There is a trivial demo app that allows testing of the service and route mixin. 
 and then navigate around a selection of access protected and unprotected routes.
 
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 ## Running Tests
 
