@@ -63,6 +63,11 @@ export default Service.extend({
   checkLoginIframeInterval: 5,
 
   /**
+   * Keycloak.login() option.
+   */
+  idpHint: null,
+
+  /**
    * @param parameters constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
    */
   installKeycloak(parameters) {
@@ -254,6 +259,11 @@ export default Service.extend({
 
     let keycloak = this.get('keycloak');
     let options = { url };
+
+    //Add idpHint to options, if it is populated
+    if (this.get('idpHint')) {
+      options['idpHint'] = this.get('idpHint');
+    }
 
     debug(`Keycloak session :: login :: ${JSON.stringify(options)}`);
 
