@@ -1,4 +1,5 @@
 /* jshint node: true */
+/* eslint-disable node/no-extraneous-require */
 const RSVP = require('rsvp');
 const chalk = require('chalk');
 const fs = require('fs-extra');
