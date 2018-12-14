@@ -253,7 +253,7 @@ export default Service.extend({
   login(url) {
 
     let keycloak = this.get('keycloak');
-    let options = { url };
+    let options = { redirectUri: url };
 
     debug(`Keycloak session :: login :: ${JSON.stringify(options)}`);
 
