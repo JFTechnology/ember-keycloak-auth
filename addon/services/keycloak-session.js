@@ -258,7 +258,7 @@ export default Service.extend({
   login(url) {
 
     let keycloak = this.get('keycloak');
-    let options = { url };
+    let options = { redirectUri: url };
 
     //Add idpHint to options, if it is populated
     if (this.get('idpHint')) {
