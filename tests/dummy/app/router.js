@@ -14,8 +14,9 @@ Router.map(function() {
 
   this.route('unprotected');
   this.route('protected');
-  this.route('protected-1', { path: '/protected-1/:protected_1_id' }, function() {
-    this.route('protected-2', { path: '/protected-2/:protected_2_id' });
+
+  this.route('model-a', { path: '/model-a/:model_a_id' }, function() {
+    this.route('model-b', { path: '/model-b/:model_b_id' });
   });
 
 });
