@@ -1,12 +1,17 @@
 import Object from '@ember/object';
 import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-module('Unit | Mixin | keycloak authenticated route mixin');
+module('Unit | Mixins | keycloak authenticated route', function(hooks) {
 
-// Replace this with your real tests.
-test('it works', assert => {
-  let KeycloakAuthenticatedRouteMixinObject = Object.extend(KeycloakAuthenticatedRouteMixin);
-  let subject = KeycloakAuthenticatedRouteMixinObject.create();
-  assert.ok(subject);
+  setupTest(hooks);
+
+  // Replace this with your real tests.
+  test('it works', assert => {
+    let MixinObject = Object.extend(KeycloakAuthenticatedRouteMixin);
+    let subject = MixinObject.create();
+    assert.ok(subject);
+  });
+
 });

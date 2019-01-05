@@ -1,12 +1,13 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('service:keycloak-session', 'Unit | Service | keycloak session', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
-});
+module('Unit | Services | keycloak session', function(hooks) {
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let service = this.subject();
-  assert.ok(service);
+  setupTest(hooks);
+
+  test('it exists', function(assert) {
+    let service = this.owner.lookup('service:keycloak-session');
+    assert.ok(service);
+  });
+
 });
