@@ -168,7 +168,7 @@ export default Service.extend({
   hasResourceRole(role, resource) { //If resource is null then clientId is used
     return Application.keycloak.hasResourceRole(role, resource);
   },
-  
+
   updateToken() {
 
     // debug(`Keycloak session :: updateToken`);
@@ -255,10 +255,10 @@ export default Service.extend({
   /**
    * @param url optional redirect url - if not present the
    */
-  login(url) {
+  login(redirectUri) {
 
     let keycloak = this.get('keycloak');
-    let options = { redirectUri: url };
+    let options = { redirectUri };
 
     //Add idpHint to options, if it is populated
     if (this.get('idpHint')) {
@@ -282,10 +282,10 @@ export default Service.extend({
   /**
    * @param url optional redirect url - if not present the
    */
-  logout(url) {
+  logout(redirectUri) {
 
     let keycloak = this.get('keycloak');
-    let options = { url };
+    let options = { redirectUri };
 
     debug(`Keycloak session :: logout :: ${JSON.stringify(options)}`);
 
