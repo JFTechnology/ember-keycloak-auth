@@ -27,6 +27,23 @@
           <button {{action "initKeycloak"}} class="btn btn-block btn-primary">Store keycloak parameters</button>
         </div>
       </div>
+
+      <h5 class="pt-5">Cookies</h5>
+      <table class="table table-sm small">
+        <thead>
+          <th>Name</th>
+          <th>Value</th>
+        </thead>
+        <tbody>
+          {{#each allCookies as |cookie|}}
+            <tr>
+              <th>{{cookie.name}}</th>
+              <td>{{cookie.value}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
     </div>
     <div class="col-6">
       <ul>
