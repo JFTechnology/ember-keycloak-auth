@@ -12,7 +12,7 @@ module('Integration | Component | keycloak session status', function(hooks) {
 
     await render(hbs`{{keycloak-session-status}}`);
 
-    assert.equal(this.element.textContent.trim(), 'No session');
+    assert.dom(this.element).hasText('No session');
 
     // Template block usage:
     await render(hbs`
@@ -21,7 +21,7 @@ module('Integration | Component | keycloak session status', function(hooks) {
     {{/keycloak-session-status}}
   `);
 
-    assert.equal(this.element.textContent.trim(), 'No session');
+    assert.dom(this.element).hasText('No session');
 
   });
 });
