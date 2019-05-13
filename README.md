@@ -18,6 +18,10 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
  are made to a Keycloak secured backend via the Ember data framework.
  * Small utility components for displaying user login state.
 
+## Ember version
+Version 0.3.1 and above of this library depend on at least version 3.8 of Ember. If you are using a version of Ember older 
+than 3.8, please use version 0.3.0.
+
 ## Installation
 
 * `git clone <repository-url>` this repository
