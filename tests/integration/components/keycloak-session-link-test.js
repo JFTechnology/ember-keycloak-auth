@@ -12,7 +12,7 @@ module('Integration | Component | keycloak session link', function(hooks) {
 
     await render(hbs`{{keycloak-session-link}}`);
 
-    assert.equal(this.element.textContent.trim(), 'No session');
+    assert.dom(this.element).hasText('No session');
 
     // Template block usage:
     await render(hbs`
@@ -21,7 +21,7 @@ module('Integration | Component | keycloak session link', function(hooks) {
     {{/keycloak-session-link}}
   `);
 
-    assert.equal(this.element.textContent.trim(), 'No session');
+    assert.dom(this.element).hasText('No session');
   });
 
 });
