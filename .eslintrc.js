@@ -16,6 +16,7 @@ module.exports = {
     browser: true
   },
   rules: {
+    "no-console": "warn"
   },
   overrides: [
     // node files
