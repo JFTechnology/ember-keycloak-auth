@@ -1,5 +1,5 @@
-{{#if session.ready}}
-  {{#if session.authenticated}}
+{{#if keycloakSession.ready}}
+  {{#if keycloakSession.authenticated}}
     <a href="#" {{action "logout"}}><i class="fa fa-sign-out"></i> Sign out</a>
   {{else}}
     <a href="#" {{action "login"}}><i class="fa fa-sign-in"></i> Sign in</a>

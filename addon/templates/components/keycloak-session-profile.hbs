@@ -1,10 +1,10 @@
-{{#if session.ready}}
+{{#if keycloakSession.ready}}
 
   <div>
     <button type="button" {{action "loadUserProfile"}} class="btn btn-info">Load user profile</button>
   </div>
 
-  {{#with session.profile as |profile|}}
+  {{#with keycloakSession.profile as |profile|}}
 
     <table class="table">
       <tbody>

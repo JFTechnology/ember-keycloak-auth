@@ -5,10 +5,20 @@ import { inject as service } from '@ember/service';
 
 import template from '../templates/components/keycloak-session-status';
 
+/**
+ * @class KeycloakSessionProfile
+ * @public
+ */
 export default class KeycloakSessionProfile extends Component {
 
-  @service('keycloak-session')
-  session;
+  /**
+   * An injected keycloak session.
+   *
+   * @property keycloakSession
+   * @type {KeycloakSession}
+   */
+  @service()
+  keycloakSession;
 
   layout = template;
 
@@ -17,7 +27,7 @@ export default class KeycloakSessionProfile extends Component {
   @computed('token')
   get roles() {
 
-    const token = get(this, 'session.tokenParsed');
+    const token = get(this, 'keycloakSession.tokenParsed');
 
     const array = [];
 
@@ -34,6 +44,6 @@ export default class KeycloakSessionProfile extends Component {
 
   @action
   loadUserProfile() {
-    this.session.loadUserProfile();
+    this.keycloakSession.loadUserProfile();
   }
 }

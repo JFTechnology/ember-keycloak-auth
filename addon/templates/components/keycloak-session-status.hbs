@@ -1,4 +1,4 @@
-{{#if session.ready}}
+{{#if keycloakSession.ready}}
 
   <div class="m-2">
     <button type="button" {{action "refresh"}} class="btn btn-info">Refresh</button>
@@ -11,31 +11,31 @@
       <tr>
         <th>Ready</th>
         <td class="text-nowrap">
-          {{session.ready}}
+          {{keycloakSession.ready}}
         </td>
       </tr>
       <tr>
         <th>Authenticated</th>
         <td class="text-nowrap">
-          {{session.authenticated}}
+          {{keycloakSession.authenticated}}
         </td>
       </tr>
       <tr>
         <th>Name</th>
         <td class="text-nowrap">
-          {{session.name}}
+          {{keycloakSession.name}}
         </td>
       </tr>
       <tr>
         <th>Subject</th>
         <td class="text-nowrap">
-          {{session.subject}}
+          {{keycloakSession.subject}}
         </td>
       </tr>
       <tr>
         <th>Refresh token</th>
         <td>
-          {{session.refreshToken}}
+          {{keycloakSession.refreshToken}}
         </td>
       </tr>
     </tbody>
@@ -51,15 +51,15 @@
       </tr>
       <tr>
         <td>Login</td>
-        <td class="text-nowrap">{{session.defaultLoginRoute}}</td>
-        <td class="text-nowrap">{{session.defaultLoginRedirectUri}}</td>
-        <td>{{link-to "View" session.defaultLoginRoute}}</td>
+        <td class="text-nowrap">{{keycloakSession.defaultLoginRoute}}</td>
+        <td class="text-nowrap">{{keycloakSession.defaultLoginRedirectUri}}</td>
+        <td>{{link-to "View" keycloakSession.defaultLoginRoute}}</td>
       </tr>
       <tr>
         <td>Logout</td>
-        <td class="text-nowrap">{{session.defaultLogoutRoute}}</td>
-        <td class="text-nowrap">{{session.defaultLogoutRedirectUri}}</td>
-        <td>{{link-to "View" session.defaultLogoutRoute}}</td>
+        <td class="text-nowrap">{{keycloakSession.defaultLogoutRoute}}</td>
+        <td class="text-nowrap">{{keycloakSession.defaultLogoutRedirectUri}}</td>
+        <td>{{link-to "View" keycloakSession.defaultLogoutRoute}}</td>
       </tr>
     </tbody>
   </table>

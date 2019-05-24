@@ -7,14 +7,23 @@ import { inject } from '@ember/service';
  * (i) check that the keycloak session is fresh immediately before a call to the secured back end, and
  * (ii) add an Authorization header into any calls made via the adapter to the secured back end.
  * If the session check fails this mixin will throw an error - it will not redirect the user to the login page.
+ *
+ * @class KeycloakAuthenticatedRoute
+ * @public
  */
 export default Mixin.create({
 
-  session: inject('keycloak-session'),
+  /**
+   * An injected keycloak session.
+   *
+   * @property keycloakSession
+   * @type {KeycloakSession}
+   */
+  keycloakSession: inject(),
 
   get headers() {
-    let session = this.get('session');
-    let keycloak = session.get('keycloak');
+    let keycloakSession = this.get('keycloakSession');
+    let keycloak = keycloakSession.get('keycloak');
 
     return {
       'Authorization': `Bearer ${keycloak['token']}`
@@ -32,9 +41,9 @@ export default Mixin.create({
     let self = this;
     let ajax = this._super;
 
-    let session = this.get('session');
+    let keycloakSession = this.get('keycloakSession');
 
-    return session.updateToken().then(
+    return keycloakSession.updateToken().then(
       () =>
         /**
          * We have a valid token - call the super method

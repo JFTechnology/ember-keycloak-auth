@@ -5,20 +5,30 @@ import { inject as service } from '@ember/service';
 
 import template from '../templates/components/keycloak-session-link';
 
+/**
+ * @class KeycloakSessionLink
+ * @public
+ */
 export default class KeycloakSessionLink extends Component {
 
-  @service('keycloak-session')
-  session;
+  /**
+   * An injected keycloak session.
+   *
+   * @property keycloakSession
+   * @type {KeycloakSession}
+   */
+  @service()
+  keycloakSession;
 
   layout = template;
 
   @action
   login() {
-    this.session.login();
+    this.keycloakSession.login();
   }
 
   @action
   logout() {
-    this.session.logout();
+    this.keycloakSession.logout();
   }
 }

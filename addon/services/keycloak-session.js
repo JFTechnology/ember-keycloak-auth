@@ -1,6 +1,7 @@
 /*global Keycloak*/
 /*eslint no-undef: "error"*/
 import Service, { inject as service } from '@ember/service';
+
 import RSVP from 'rsvp';
 import { computed, get, set } from '@ember/object';
 
@@ -125,14 +126,100 @@ export default class KeycloakSession extends Service {
 
       if (info) {
 
-        console.debug(`Keycloak session :: routeWillChange :: ${routeInfo.name} / ${JSON.stringify(get(info, 'metadata'))}`);
         this.checkTransition(transition);
       }
     }
   }
 
   /**
-   * @param parameters constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
+   * Keycloak callback function.
+   *
+   * @property onReady
+   * @type {Function}
+   */
+  onReady = (authenticated) => {
+    console.debug(`Keycloak session :: onReady ${authenticated}`);
+    set(this, 'ready', true);
+    set(this, 'authenticated', authenticated);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthSuccess
+   * @type {Function}
+   */
+  onAuthSuccess = () => {
+    console.debug('Keycloak session :: onAuthSuccess');
+    set(this, 'authenticated', true);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthError
+   * @type {Function}
+   */
+  onAuthError = () => {
+    console.debug('onAuthError');
+    set(this, 'authenticated', false);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthRefreshSuccess
+   * @type {Function}
+   */
+  onAuthRefreshSuccess = () => {
+    console.debug('onAuthRefreshSuccess');
+    set(this, 'authenticated', true);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthRefreshError
+   * @type {Function}
+   */
+  onAuthRefreshError = () => {
+    console.debug('onAuthRefreshError');
+    set(this, 'authenticated', false);
+    set(this, 'timestamp', new Date());
+    this.clearToken();
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onTokenExpired
+   * @type {Function}
+   */
+  onTokenExpired = () => {
+    console.debug('onTokenExpired');
+    set(this, 'authenticated', false);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthLogout
+   * @type {Function}
+   */
+  onAuthLogout = () => {
+    console.debug('onAuthLogout');
+    set(this, 'authenticated', false);
+    set(this, 'timestamp', new Date());
+  };
+
+  /**
+   * @method installKeycloak
+   * @param {*[]} parameters Constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
    */
   installKeycloak(parameters) {
 
@@ -152,92 +239,6 @@ export default class KeycloakSession extends Service {
 
     console.debug('Keycloak session :: install :: completed');
   }
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onReady
-   * @type {Function}
-   */
-  onReady = (authenticated) => {
-    console.debug(`Keycloak session :: onReady ${authenticated}`);
-    this.set('ready', true);
-    this.set('authenticated', authenticated);
-    this.set('timestamp', new Date());
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onAuthSuccess
-   * @type {Function}
-   */
-  onAuthSuccess = () => {
-    console.debug('Keycloak session :: onAuthSuccess');
-    this.set('authenticated', true);
-    this.set('timestamp', new Date());
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onAuthError
-   * @type {Function}
-   */
-  onAuthError = () => {
-    console.debug('onAuthError');
-    this.set('authenticated', false);
-    this.set('timestamp', new Date());
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onAuthRefreshSuccess
-   * @type {Function}
-   */
-  onAuthRefreshSuccess = () => {
-    console.debug('onAuthRefreshSuccess');
-    this.set('authenticated', true);
-    this.set('timestamp', new Date());
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onAuthRefreshError
-   * @type {Function}
-   */
-  onAuthRefreshError = () => {
-    console.debug('onAuthRefreshError');
-    this.set('authenticated', false);
-    this.set('timestamp', new Date());
-    this.clearToken();
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onTokenExpired
-   * @type {Function}
-   */
-  onTokenExpired = () => {
-    console.debug('onTokenExpired');
-    this.set('authenticated', false);
-    this.set('timestamp', new Date());
-  };
-
-  /**
-   * Keycloak callback function.
-   *
-   * @property onAuthLogout
-   * @type {Function}
-   */
-  onAuthLogout = () => {
-    console.debug('onAuthLogout');
-    this.set('authenticated', false);
-    this.set('timestamp', new Date());
-  };
 
   /**
    * @method initKeycloak
@@ -316,12 +317,26 @@ export default class KeycloakSession extends Service {
     return this.keycloak.tokenParsed;
   }
 
+  /**
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method hasRealmRole
+   * @param role {string} The role to check
+   * @return {boolean} True if user in role.
+   */
   hasRealmRole(role) {
     return this.keycloak.hasRealmRole(role);
   }
 
+  /**
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method hasResourceRole
+   * @param role {string} The role to check
+   * @param resource {string} The resource to check
+   * @return {boolean} True if user in role.
+   */
   hasResourceRole(role, resource) {
-    //If resource is null then clientId is used
     return this.keycloak.hasResourceRole(role, resource);
   }
 
@@ -329,7 +344,7 @@ export default class KeycloakSession extends Service {
    * Delegates to the wrapped Keycloak instance's method using the minValidity property.
    *
    * @method updateToken
-   * @return {Promise} x
+   * @return {Promise}
    */
   updateToken() {
 
@@ -370,7 +385,7 @@ export default class KeycloakSession extends Service {
 
       let url = this._parseRedirectUrl(this.router, transition);
 
-      console.debug(`Keycloak session :: checkTransition :: url='${url}'`);
+      // console.debug(`Keycloak session :: checkTransition :: url='${url}'`);
 
       return this.updateToken().then(
         null,
