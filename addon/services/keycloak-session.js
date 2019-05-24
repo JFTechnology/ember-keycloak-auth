@@ -6,63 +6,105 @@ import { computed, get, set } from '@ember/object';
 
 const { Promise } = RSVP;
 
+/**
+ * Ember service that wraps a Keycloak js instance.
+ *
+ * @class KeycloakSession
+ * @public
+ */
 export default class KeycloakSession extends Service {
 
+  /**
+   * The injected Ember router service.
+   *
+   * @property router
+   * @type {RouterService}
+   */
   @service('router')
   router;
 
   name = 'keycloak session';
 
   /**
-   * Value used in calls to KeyCloak.updateToken(minValidity)
+   * Value in seconds used in calls to KeyCloak.updateToken(minValidity). Default 30.
+   *
+   * @property minValidity
+   * @type {number}
    */
   minValidity = 30;
 
   /**
-   * Bound property to track session state. Indicates that a keycloak session has been successfully created.
+   * Bound property to track session state. Indicates that a keycloak session has been successfully created. Default false.
+   *
+   * @property ready
+   * @type {boolean}
    */
   ready = false;
 
   /**
-   * Bound property to track session state. Indicates that the session has authenticated.
+   * Bound property to track session state. Indicates that the session has authenticated. Default false.
+   *
+   * @property authenticated
+   * @type {boolean}
    */
   authenticated = false;
 
   /**
    * Bound property to track session state. Track last activity time.
+   *
+   * @property timestamp
+   * @type {Date}
    */
   timestamp = null;
 
   /**
-   * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'.
+   * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'. Default 'login-required'.
    * See http://www.keycloak.org/documentation.html for complete details.
+   *
+   * @property onLoad
+   * @type {String}
    */
   onLoad = 'login-required';
 
   /**
-   * Keycloak.init() option. Should be one of 'query' or 'fragment'.
+   * Keycloak.init() option. Should be one of 'query' or 'fragment'. Default 'fragment'.
    * See http://www.keycloak.org/documentation.html for complete details.
+   *
+   * @property responseMode
+   * @type {String}
    */
   responseMode = 'fragment';
 
   /**
-   * Keycloak.init() option. Should be one of 'standard', 'implicit' or 'hybrid'.
+   * Keycloak.init() option. Should be one of 'standard', 'implicit' or 'hybrid'. Default 'standard'.
    * See http://www.keycloak.org/documentation.html for complete details.
+   *
+   * @property flow
+   * @type {String}
    */
   flow = 'standard';
 
   /**
-   * Keycloak.init() option.
+   * Keycloak.init() option. Default 'true'.
+   *
+   * @property checkLoginIframe
+   * @type {boolean}
    */
   checkLoginIframe = true;
 
   /**
-   * Keycloak.init() option.
+   * Keycloak.init() option. Default '5'.
+   *
+   * @property checkLoginIframeInterval
+   * @type {number}
    */
   checkLoginIframeInterval = 5;
 
   /**
    * Keycloak.login() option.
+   *
+   * @property idpHint
+   * @type {String}
    */
   idpHint = null;
 
@@ -111,6 +153,12 @@ export default class KeycloakSession extends Service {
     console.debug('Keycloak session :: install :: completed');
   }
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onReady
+   * @type {Function}
+   */
   onReady = (authenticated) => {
     console.debug(`Keycloak session :: onReady ${authenticated}`);
     this.set('ready', true);
@@ -118,24 +166,48 @@ export default class KeycloakSession extends Service {
     this.set('timestamp', new Date());
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthSuccess
+   * @type {Function}
+   */
   onAuthSuccess = () => {
     console.debug('Keycloak session :: onAuthSuccess');
     this.set('authenticated', true);
     this.set('timestamp', new Date());
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthError
+   * @type {Function}
+   */
   onAuthError = () => {
     console.debug('onAuthError');
     this.set('authenticated', false);
     this.set('timestamp', new Date());
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthRefreshSuccess
+   * @type {Function}
+   */
   onAuthRefreshSuccess = () => {
     console.debug('onAuthRefreshSuccess');
     this.set('authenticated', true);
     this.set('timestamp', new Date());
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthRefreshError
+   * @type {Function}
+   */
   onAuthRefreshError = () => {
     console.debug('onAuthRefreshError');
     this.set('authenticated', false);
@@ -143,18 +215,33 @@ export default class KeycloakSession extends Service {
     this.clearToken();
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onTokenExpired
+   * @type {Function}
+   */
   onTokenExpired = () => {
     console.debug('onTokenExpired');
     this.set('authenticated', false);
     this.set('timestamp', new Date());
   };
 
+  /**
+   * Keycloak callback function.
+   *
+   * @property onAuthLogout
+   * @type {Function}
+   */
   onAuthLogout = () => {
     console.debug('onAuthLogout');
     this.set('authenticated', false);
     this.set('timestamp', new Date());
   };
 
+  /**
+   * @method initKeycloak
+   */
   initKeycloak() {
 
     console.debug('Keycloak session :: init');
@@ -174,26 +261,56 @@ export default class KeycloakSession extends Service {
     });
   }
 
+  /**
+   * The wrapped Keycloak instance.
+   *
+   * @property keycloak
+   * @type {Keycloak}
+   */
   @computed('timestamp')
   get keycloak() {
     return this._keycloak;
   }
 
+  /**
+   * The current Keycloak subject.
+   *
+   * @property subject
+   * @type {string}
+   */
   @computed('timestamp')
   get subject() {
     return this.keycloak.subject;
   }
 
+  /**
+   * The current Keycloak refreshToken.
+   *
+   * @property refreshToken
+   * @type {string}
+   */
   @computed('timestamp')
   get refreshToken() {
     return this.keycloak.refreshToken;
   }
 
+  /**
+   * The current Keycloak token.
+   *
+   * @property token
+   * @type {string}
+   */
   @computed('timestamp')
   get token() {
     return this.keycloak.token;
   }
 
+  /**
+   * The current Keycloak tokenParsed.
+   *
+   * @property tokenParsed
+   * @type {string}
+   */
   @computed('timestamp')
   get tokenParsed() {
     return this.keycloak.tokenParsed;
@@ -208,15 +325,17 @@ export default class KeycloakSession extends Service {
     return this.keycloak.hasResourceRole(role, resource);
   }
 
+  /**
+   * Delegates to the wrapped Keycloak instance's method using the minValidity property.
+   *
+   * @method updateToken
+   * @return {Promise} x
+   */
   updateToken() {
-
-    // console.debug(`Keycloak session :: updateToken`);
-
-    let minValidity = this.get('minValidity');
 
     return new Promise((resolve, reject) => {
 
-      this.keycloak.updateToken(minValidity)
+      this.keycloak.updateToken(this.minValidity)
         .success(refreshed => {
           // console.debug(`update token resolved as success refreshed='${refreshed}'`);
           resolve(refreshed);
@@ -228,10 +347,23 @@ export default class KeycloakSession extends Service {
     });
   }
 
+  /**
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method clearToken
+   * @return {Promise} x
+   */
   clearToken() {
     this.keycloak.clearToken();
   }
 
+  /**
+   * Updates the keycloak token redirecting to login page if not valid.
+   *
+   * @method checkTransition
+   * @param {Transition} transition The transition in progress.
+   * @return {Promise} Wrapped promise.
+   */
   checkTransition(transition) {
 
     if (this.ready) {
@@ -252,9 +384,10 @@ export default class KeycloakSession extends Service {
   /**
    * Parses the redirect url from the intended 'to' route of a transition.
    *
-   * @param router
-   * @param transition
-   * @returns URL to include as the Keycloak redirect
+   * @method _parseRedirectUrl
+   * @param {RouterService} router The ember router service.
+   * @param {Transition} transition The transition in progress.
+   * @returns {String} URL to include as the Keycloak redirect
    * @private
    */
   _parseRedirectUrl(router, transition) {
@@ -283,6 +416,12 @@ export default class KeycloakSession extends Service {
     return `${window.location.origin}${url}`;
   }
 
+  /**
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method loadUserProfile
+   * @return {Promise} Resolves on server response
+   */
   loadUserProfile() {
 
     this.keycloak.loadUserProfile().success(profile => {
@@ -293,7 +432,11 @@ export default class KeycloakSession extends Service {
   }
 
   /**
-   * @param redirectUri optional redirect url - if not present the
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method login
+   * @param {String} redirectUri Optional redirect url
+   * @return {Promise} Resolves on server response
    */
   login(redirectUri) {
 
@@ -319,7 +462,11 @@ export default class KeycloakSession extends Service {
   }
 
   /**
-   * @param redirectUri optional redirect url - if not present the
+   * Delegates to the wrapped Keycloak instance's method.
+   *
+   * @method logout
+   * @param {String} redirectUri Optional redirect url
+   * @return {Promise} Resolves on server response.
    */
   logout(redirectUri) {
 

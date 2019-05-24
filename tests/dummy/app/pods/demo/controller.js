@@ -3,7 +3,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { action, computed } from '@ember/object';
 
-export default class ApplicationController extends Controller {
+export default class DemoController extends Controller {
 
   @service()
   keycloakSession;
@@ -28,7 +28,7 @@ export default class ApplicationController extends Controller {
 
   init() {
 
-    this._super(...arguments);
+    super.init(...arguments);
 
     let cookies = this.get('cookies');
 

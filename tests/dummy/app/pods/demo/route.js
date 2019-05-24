@@ -4,8 +4,8 @@ import { inject as service } from '@ember/service';
 
 export default class ApplicationRoute extends Route {
 
-  @service('keycloak-session')
-  session;
+  @service()
+  keycloakSession;
 
   @service()
   cookies;
@@ -15,7 +15,7 @@ export default class ApplicationRoute extends Route {
     super.init(...arguments);
 
     // if required constructor parameters are available as cookies go ahead in init the service.
-    // this would be replaced by initialization code when used in an application
+    // this should be replaced by initialization code when used in an application
     let cookies = this.cookies;
 
     let url = cookies.read('keycloak-url');
@@ -30,11 +30,11 @@ export default class ApplicationRoute extends Route {
         clientId,
       };
 
-      this.session.installKeycloak(options);
+      this.keycloakSession.installKeycloak(options);
     }
   }
 
   beforeModel() {
-    return this.session.initKeycloak();
+    return this.keycloakSession.initKeycloak();
   }
 }

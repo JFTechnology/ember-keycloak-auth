@@ -1,7 +1,7 @@
 <div class="container p-3">
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-5">
       <div class="card bg-light">
         <div class="card-body">
           <div class="form">
@@ -31,8 +31,10 @@
       <h5 class="pt-5">Cookies</h5>
       <table class="table table-sm small">
         <thead>
-          <th>Name</th>
-          <th>Value</th>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
         </thead>
         <tbody>
           {{#each allCookies as |cookie|}}
@@ -45,41 +47,41 @@
       </table>
 
     </div>
-    <div class="col-6">
+    <div class="col-7">
 
       <ul>
         <li>
-          {{#link-to "status"}}
+          {{#link-to "demo.status"}}
             Status
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "protected-mixin"}}
+          {{#link-to "demo.protected-mixin"}}
             Route protected by mixin
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "protected-metadata"}}
+          {{#link-to "demo.protected-metadata"}}
             Route protected by metadata
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "protected-metadata" (query-params param="test")}}
+          {{#link-to "demo.protected-metadata" (query-params param="test")}}
             Route protected by metadata + query param
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "model-a" 1}}
+          {{#link-to "demo.model-a" 1}}
             Protected route to model A
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "model-a.model-b" 1 2}}
+          {{#link-to "demo.model-a.model-b" 1 2}}
             Protected route to model B
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "unprotected"}}
+          {{#link-to "demo.unprotected"}}
             Unprotected route
           {{/link-to}}
         </li>
@@ -87,11 +89,6 @@
 
       {{outlet}}
 
-    </div>
-    <div class="col-2">
-      <div>
-        {{keycloak-session-link}}
-      </div>
     </div>
   </div>
 
