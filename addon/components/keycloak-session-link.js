@@ -14,11 +14,11 @@ export default class KeycloakSessionLink extends Component {
 
   @action
   login() {
-    this.get('session').login();
+    this.session.login();
   }
 
   @action
   logout() {
-    this.get('session').logout();
+    this.session.logout();
   }
 }

@@ -1,7 +1,5 @@
 import Component from '@ember/component';
 
-import { debug } from '@ember/debug';
-
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -16,18 +14,18 @@ export default class KeycloakSessionStatus extends Component {
 
   @action
   refresh() {
-    this.get('session').updateToken().then(result => {
-      debug(result);
+    this.session.updateToken().then(result => {
+      console.debug(result);
     });
   }
 
   @action
   login() {
-    this.get('session').login();
+    this.session.login();
   }
 
   @action
   logout() {
-    this.get('session').logout();
+    this.session.logout();
   }
 }

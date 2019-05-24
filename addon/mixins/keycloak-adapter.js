@@ -1,6 +1,6 @@
 import Mixin from '@ember/object/mixin';
+
 import { inject } from '@ember/service';
-import { debug } from '@ember/debug';
 
 /**
  * Ember Mixin that can be combined with an ember-data adapter. It is intended to..
@@ -42,7 +42,7 @@ export default Mixin.create({
         ajax.apply(self, [url, type, hash]),
 
       reason => {
-        debug(`Keycloak adapter mixin :: ajax :: rejected :: ${reason}`);
+        console.warn(`Keycloak adapter mixin :: ajax :: rejected :: ${reason}`);
         throw reason;
       });
   },
