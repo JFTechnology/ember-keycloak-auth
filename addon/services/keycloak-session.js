@@ -1,71 +1,73 @@
 /*global Keycloak*/
 /*eslint no-undef: "error"*/
+import Service, { inject as service } from '@ember/service';
+
 import Application from '@ember/application';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 import { debug } from '@ember/debug';
-import Service, { inject as service } from '@ember/service';
 
 const { Promise } = RSVP;
 
-export default Service.extend({
+export default class KeycloakSession extends Service {
 
-  routingService: service('-routing'),
+  @service('-routing')
+  routingService;
 
-  name: 'keycloak session',
+  name = 'keycloak session';
 
   /**
    * Value used in calls to KeyCloak.updateToken(minValidity)
    */
-  minValidity: 30,
+  minValidity = 30;
 
   /**
    * Bound property to track session state. Indicates that a keycloak session has been successfully created.
    */
-  ready: false,
+  ready = false;
 
   /**
    * Bound property to track session state. Indicates that the session has authenticated.
    */
-  authenticated: false,
+  authenticated = false;
 
   /**
    * Bound property to track session state. Track last activity time.
    */
-  timestamp: null,
+  timestamp = null;
 
   /**
    * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'.
    * See http://www.keycloak.org/documentation.html for complete details.
    */
-  onLoad: 'login-required',
+  onLoad = 'login-required';
 
   /**
    * Keycloak.init() option. Should be one of 'query' or 'fragment'.
    * See http://www.keycloak.org/documentation.html for complete details.
    */
-  responseMode: 'fragment',
+  responseMode = 'fragment';
 
   /**
    * Keycloak.init() option. Should be one of 'standard', 'implicit' or 'hybrid'.
    * See http://www.keycloak.org/documentation.html for complete details.
    */
-  flow: 'standard',
+  flow = 'standard';
 
   /**
    * Keycloak.init() option.
    */
-  checkLoginIframe: true,
+  checkLoginIframe = true;
 
   /**
    * Keycloak.init() option.
    */
-  checkLoginIframeInterval: 5,
+  checkLoginIframeInterval = 5;
 
   /**
    * Keycloak.login() option.
    */
-  idpHint: null,
+  idpHint = null;
 
   /**
    * @param parameters constructor parameters for Keycloak object - see Keycloak JS adapter docs for details
@@ -125,7 +127,7 @@ export default Service.extend({
     Application.keycloak = keycloak;
 
     debug('Keycloak session :: init :: completed');
-  },
+  }
 
   initKeycloak() {
 
@@ -149,25 +151,40 @@ export default Service.extend({
           reject(reason);
         });
     });
-  },
+  }
 
-  keycloak: computed('timestamp', () => Application.keycloak),
+  @computed('timestamp')
+  get keycloak() {
+    return Application.keycloak;
+  }
 
-  subject: computed('timestamp', () => Application.keycloak.subject),
+  @computed('timestamp')
+  get subject() {
+    return Application.keycloak.subject;
+  }
 
-  refreshToken: computed('timestamp', () => Application.keycloak.refreshToken),
+  @computed('timestamp')
+  get refreshToken() {
+    return Application.keycloak.refreshToken;
+  }
 
-  token: computed('timestamp', () => Application.keycloak.token),
+  @computed('timestamp')
+  get token() {
+    return Application.keycloak.token;
+  }
 
-  tokenParsed: computed('timestamp', () => Application.keycloak.tokenParsed),
+  @computed('timestamp')
+  get tokenParsed() {
+    return Application.keycloak.tokenParsed;
+  }
 
   hasRealmRole(role) {
     return Application.keycloak.hasRealmRole(role);
-  },
+  }
 
   hasResourceRole(role, resource) { //If resource is null then clientId is used
     return Application.keycloak.hasResourceRole(role, resource);
-  },
+  }
 
   updateToken() {
 
@@ -188,7 +205,7 @@ export default Service.extend({
           reject(new Error('authentication token update failed'));
         });
     });
-  },
+  }
 
   checkTransition(transition) {
 
@@ -205,7 +222,7 @@ export default Service.extend({
 
       return self.login(redirectUri);
     });
-  },
+  }
 
   /**
    * Parses the redirect url from the intended route of a transition. WARNING : this relies on private methods in an
@@ -239,7 +256,7 @@ export default Service.extend({
     }
 
     return `${window.location.origin}${url}`;
-  },
+  }
 
   loadUserProfile() {
 
@@ -250,7 +267,7 @@ export default Service.extend({
       debug(`Loaded profile for ${profile.id}`);
       self.set('profile', profile);
     });
-  },
+  }
 
   /**
    * @param url optional redirect url - if not present the
@@ -277,7 +294,7 @@ export default Service.extend({
         reject(new Error('login failed'));
       });
     });
-  },
+  }
 
   /**
    * @param url optional redirect url - if not present the
@@ -301,5 +318,5 @@ export default Service.extend({
         reject(new Error('logout failed'));
       });
     });
-  },
-});
+  }
+}

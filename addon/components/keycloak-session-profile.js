@@ -1,17 +1,21 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+
+import { action, computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/keycloak-session-profile';
 
-export default Component.extend({
+import template from '../templates/components/keycloak-session-status';
 
-  layout,
+export default class KeycloakSessionProfile extends Component {
 
-  token: null,
+  @service('keycloak-session')
+  session;
 
-  session: service('keycloak-session'),
+  layout = template;
 
-  roles: computed('token', function() {
+  token = null;
+
+  @computed('token')
+  get roles() {
 
     const token = get(this, 'session.tokenParsed');
 
@@ -26,11 +30,10 @@ export default Component.extend({
     }
 
     return array;
-  }),
+  }
 
-  actions: {
-    loadUserProfile() {
-      this.get('session').loadUserProfile();
-    },
-  },
-});
+  @action
+  loadUserProfile() {
+    this.session.loadUserProfile();
+  }
+}

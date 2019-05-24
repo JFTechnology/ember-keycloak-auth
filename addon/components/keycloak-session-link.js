@@ -1,19 +1,24 @@
 import Component from '@ember/component';
+
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/keycloak-session-link';
 
-export default Component.extend({
+import template from '../templates/components/keycloak-session-link';
 
-  layout,
+export default class KeycloakSessionLink extends Component {
 
-  session: service('keycloak-session'),
+  @service('keycloak-session')
+  session;
 
-  actions: {
-    login() {
-      this.get('session').login();
-    },
-    logout() {
-      this.get('session').logout();
-    },
-  },
-});
+  layout = template;
+
+  @action
+  login() {
+    this.get('session').login();
+  }
+
+  @action
+  logout() {
+    this.get('session').logout();
+  }
+}

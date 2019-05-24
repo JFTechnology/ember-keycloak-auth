@@ -1,25 +1,33 @@
 import Component from '@ember/component';
+
 import { debug } from '@ember/debug';
+
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/keycloak-session-status';
 
-export default Component.extend({
+import template from '../templates/components/keycloak-session-status';
 
-  layout,
+export default class KeycloakSessionStatus extends Component {
 
-  session: service('keycloak-session'),
+  @service('keycloak-session')
+  session;
 
-  actions: {
-    refresh() {
-      this.get('session').updateToken().then(result => {
-        debug(result);
-      });
-    },
-    login() {
-      this.get('session').login();
-    },
-    logout() {
-      this.get('session').logout();
-    },
-  },
-});
+  layout = template;
+
+  @action
+  refresh() {
+    this.get('session').updateToken().then(result => {
+      debug(result);
+    });
+  }
+
+  @action
+  login() {
+    this.get('session').login();
+  }
+
+  @action
+  logout() {
+    this.get('session').logout();
+  }
+}
