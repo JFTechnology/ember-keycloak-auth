@@ -3,7 +3,9 @@
 [![npm version](https://badge.fury.io/js/ember-keycloak-auth.svg)](https://badge.fury.io/js/ember-keycloak-auth)
 [![Dependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth)
 [![devDependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth/dev-status.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth#info=devDependencies)
-# ember-keycloak-auth 
+
+ember-keycloak-auth
+==============================================================================
 
 This README outlines the details of collaborating on this Ember addon.
 
@@ -22,7 +24,14 @@ REST services secured by the Keycloak authentication server from Redhat/JBoss (h
 Version 0.3.1 and above of this library depend on at least version 3.8 of Ember. If you are using a version of Ember older 
 than 3.8, please use version 0.3.0.
 
-## Installation
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v3.8 or above
+* Ember CLI v3.8 or above
+
+Installation
+------------------------------------------------------------------------------
 
 * `git clone <repository-url>` this repository
 * `cd ember-keycloak-auth`
@@ -34,7 +43,8 @@ Run:
 ember install ember-keycloak-auth
 ```
 
-## Usage
+Usage
+------------------------------------------------------------------------------
 
 ### Initialising the service
 
@@ -133,3 +143,14 @@ and then navigate around a selection of access protected and unprotected routes.
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 For more information on Keycloak, visit [http://keycloak.jboss.com/](http://keycloak.jboss.com/).
+
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
