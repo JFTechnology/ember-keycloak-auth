@@ -13,7 +13,8 @@ Router.map(function() {
   this.route('logged-in');
 
   this.route('unprotected');
-  this.route('protected');
+  this.route('protected-mixin');
+  this.route('protected-metadata');
 
   this.route('model-a', { path: '/model-a/:model_a_id' }, function() {
     this.route('model-b', { path: '/model-b/:model_b_id' });

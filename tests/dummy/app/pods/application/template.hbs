@@ -48,11 +48,41 @@
     <div class="col-6">
 
       <ul>
-        <li>{{#link-to "status"}}Status{{/link-to}}</li>
-        <li>{{#link-to "protected"}}Protected route{{/link-to}}</li>
-        <li>{{#link-to "model-a" 1}}Protected route to model A{{/link-to}}</li>
-        <li>{{#link-to "model-a.model-b" 1 2}}Protected route to model B{{/link-to}}</li>
-        <li>{{#link-to "unprotected"}}Unprotected route{{/link-to}}</li>
+        <li>
+          {{#link-to "status"}}
+            Status
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "protected-mixin"}}
+            Route protected by mixin
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "protected-metadata"}}
+            Route protected by metadata
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "protected-metadata" (query-params param="test")}}
+            Route protected by metadata + query param
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "model-a" 1}}
+            Protected route to model A
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "model-a.model-b" 1 2}}
+            Protected route to model B
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "unprotected"}}
+            Unprotected route
+          {{/link-to}}
+        </li>
       </ul>
 
       {{outlet}}
