@@ -1,5 +1,6 @@
 import Mixin from '@ember/object/mixin';
 
+import { computed } from '@ember/object';
 import { inject } from '@ember/service';
 
 /**
@@ -21,20 +22,22 @@ export default Mixin.create({
    */
   keycloakSession: inject(),
 
-  get headers() {
-    let keycloakSession = this.get('keycloakSession');
-    let keycloak = keycloakSession.get('keycloak');
+  headers: computed('keycloakSession.timestamp', function() {
+    let token = this.get('keycloakSession.token');
 
     return {
-      'Authorization': `Bearer ${keycloak['token']}`
+      'Authorization': `Bearer ${token}`
     };
-  },
+  }),
 
   /**
    * Will overload the adapter method to ensure that the call to the secured back end is made only after the session token has been updated.
-   * @param url
-   * @param type
-   * @param hash
+   *
+   * @method ajax
+   * @param url {String}
+   * @param type {String}
+   * @param hash {Object}
+   * @private
    */
   ajax(url, type, hash) {
 
@@ -45,9 +48,7 @@ export default Mixin.create({
 
     return keycloakSession.updateToken().then(
       () =>
-        /**
-         * We have a valid token - call the super method
-         */
+        /* We have a valid token - call the super method */
         ajax.apply(self, [url, type, hash]),
 
       reason => {
