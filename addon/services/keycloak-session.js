@@ -402,7 +402,7 @@ export default class KeycloakSession extends Service {
    * @method _parseRedirectUrl
    * @param {RouterService} router The ember router service.
    * @param {Transition} transition The transition in progress.
-   * @returns {String} URL to include as the Keycloak redirect
+   * @return {String} URL to include as the Keycloak redirect
    * @private
    */
   _parseRedirectUrl(router, transition) {
@@ -416,9 +416,7 @@ export default class KeycloakSession extends Service {
 
     // console.debug(`Keycloak session :: _parseRedirectUrl :: '${routeInfo.name} ${JSON.stringify(params)} ${JSON.stringify(routeInfo.queryParams)}'`);
 
-    /**
-     * First check the intent for an explicit url
-     */
+    //First check the intent for an explicit url
     let url = router.urlFor(routeInfo.name, ...params, { queryParams });
 
     // console.debug(`Keycloak session :: _parseRedirectUrl :: ${window.location.origin} + ${router.rootUrl} + ${url}`);
