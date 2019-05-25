@@ -12,22 +12,22 @@ This README outlines the details of collaborating on this Ember addon.
 @jftechnology/ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
 REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). 
 
-See [addon docs](https://jftechnology.github.io/ember-keycloak-auth/versions/master) for full API details.
+See [addon docs](https://jftechnology.github.io/ember-keycloak-auth) for full API details.
 
 
 ## Features overview
 
  * Presents the Keycloak JS adapter in a service that can be injected into an EmberJS app.
- * Provides a mixin that can be used with Ember Routes to check authentication on transition.
+ * Tracks transitions via the Ember Router API and checks authentication based on route info metadata.
  * Provides a mixin that can be used with Ember data adapters to manage authentication headers whenever calls 
  are made to a Keycloak secured backend via the Ember data framework.
  * Small utility components for displaying user login state.
 
 ## Ember version
-Versions 0.9+ of this library depend require the LTS version 3.8 of Ember or greater. Versions 0.9+ uses native classes 
+Versions 0.9+ of this library require the LTS version 3.8 of Ember or greater. Versions 0.9+ uses native classes 
 and Stage 1 decorators and requires ember-decorators-polyfill for environments before Ember 3.10. 
 
-If you are using a version of Ember older than 3.8, please use ember-keycloak-auth version 0.3.0 (no @jftechnology scope).
+If you are using a version of Ember older than 3.8, please use ember-keycloak-auth version 0.3.0 (note - no @jftechnology scope).
 
 Compatibility
 ------------------------------------------------------------------------------
@@ -35,6 +35,9 @@ Compatibility
 ## @jftechnology/ember-keycloak-auth v0.9+
 * Ember.js (LTS) v3.8 or above (requires ember-decorators-polyfill for Ember versions < 3.10)
 * Ember CLI (LTS) v3.8 or above
+
+### Breaking changes v0.9+
+* Package name now scoped (ember-keycloak-auth:0.3.x -> @jftechnology/ember-keycloak-auth:0.9.x)
 
 ## ember-keycloak-auth v0.3
 * Ember.js v2.18 or above
@@ -56,7 +59,7 @@ ember install @jftechnology/ember-keycloak-auth
 Usage
 ------------------------------------------------------------------------------
 
-See [addon docs](https://jftechnology.github.io/ember-keycloak-auth/versions/master) for usage and API details.
+See [addon docs](https://jftechnology.github.io/ember-keycloak-auth) for usage and API details.
 
 ## Running
 
