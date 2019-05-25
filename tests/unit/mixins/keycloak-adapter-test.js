@@ -1,5 +1,5 @@
 import Object from '@ember/object';
-import KeycloakAdapterMixin from 'ember-keycloak-auth/mixins/keycloak-adapter';
+import KeycloakAdapterMixin from '@jftechnology/ember-keycloak-auth/mixins/keycloak-adapter';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 

@@ -1,4 +1,5 @@
 import Mixin from '@ember/object/mixin';
+
 import { inject } from '@ember/service';
 
 /**

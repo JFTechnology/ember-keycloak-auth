@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 
-import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
+import KeycloakAuthenticatedRouteMixin from '@jftechnology/ember-keycloak-auth/mixins/keycloak-authenticated-route';
 
 export default class ModelARoute extends Route.extend(KeycloakAuthenticatedRouteMixin) {
 

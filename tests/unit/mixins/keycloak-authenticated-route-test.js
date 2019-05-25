@@ -1,5 +1,5 @@
 import Object from '@ember/object';
-import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
+import KeycloakAuthenticatedRouteMixin from '@jftechnology/ember-keycloak-auth/mixins/keycloak-authenticated-route';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
