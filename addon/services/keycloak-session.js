@@ -249,17 +249,19 @@ export default class KeycloakSessionService extends Service {
 
     let options = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
 
-    return new Promise((resolve, reject) => {
-      this.keycloak.init(options)
-        .success(authenticated => {
-          console.info('Keycloak session ::  init success');
-          resolve(authenticated);
-        })
-        .error(reason => {
-          console.warn('Keycloak session ::  init success');
-          reject(reason);
-        });
-    });
+    if (this.keycloak) {
+      return new Promise((resolve, reject) => {
+        this.keycloak.init(options)
+          .success(authenticated => {
+            console.info('Keycloak session ::  init success');
+            resolve(authenticated);
+          })
+          .error(reason => {
+            console.warn('Keycloak session ::  init success');
+            reject(reason);
+          });
+      });
+    }
   }
 
   /**
