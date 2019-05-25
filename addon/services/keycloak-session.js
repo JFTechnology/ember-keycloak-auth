@@ -439,11 +439,11 @@ export default class KeycloakSessionService extends Service {
    */
   loadUserProfile() {
 
-    this.keycloak.loadUserProfile().success(profile => {
-
-      console.debug(`Loaded profile for ${profile.id}`);
-      set(this, 'profile', profile);
-    });
+    this.keycloak.loadUserProfile()
+      .success(profile => {
+        console.debug(`Loaded profile for ${profile.id}`);
+        set(this, 'profile', profile);
+      });
   }
 
   /**
@@ -466,13 +466,15 @@ export default class KeycloakSessionService extends Service {
 
     return new Promise((resolve, reject) => {
 
-      this.keycloak.login(options).success(() => {
-        console.debug('Keycloak session :: login :: success');
-        resolve('login OK');
-      }).error(() => {
-        console.debug('login error - this should never be possible');
-        reject(new Error('login failed'));
-      });
+      this.keycloak.login(options)
+        .success(() => {
+          console.debug('Keycloak session :: login :: success');
+          resolve('login OK');
+        })
+        .error(() => {
+          console.debug('login error - this should never be possible');
+          reject(new Error('login failed'));
+        });
     });
   }
 
@@ -491,15 +493,17 @@ export default class KeycloakSessionService extends Service {
 
     return new Promise((resolve, reject) => {
 
-      this.keycloak.logout(options).success(() => {
-        console.debug('Keycloak session :: logout :: success');
-        this.keycloak.clearToken();
-        resolve('logout OK');
-      }).error(() => {
-        console.debug('logout error - this should never be possible');
-        this.keycloak.clearToken();
-        reject(new Error('logout failed'));
-      });
+      this.keycloak.logout(options)
+        .success(() => {
+          console.debug('Keycloak session :: logout :: success');
+          this.keycloak.clearToken();
+          resolve('logout OK');
+        })
+        .error(() => {
+          console.debug('logout error - this should never be possible');
+          this.keycloak.clearToken();
+          reject(new Error('logout failed'));
+        });
     });
   }
 }

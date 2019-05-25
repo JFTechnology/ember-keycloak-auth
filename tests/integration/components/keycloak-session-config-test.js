@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 import MockKeycloakSession from '@jftechnology/ember-keycloak-auth/test-support/mock-keycloak-session';
 
-module('Integration | Component | keycloak session link', function(hooks) {
+module('Integration | Component | keycloak-session-config', function(hooks) {
 
   setupRenderingTest(hooks);
 
@@ -25,46 +25,30 @@ module('Integration | Component | keycloak session link', function(hooks) {
 
   test('it renders', async function(assert) {
 
-    let service = this.owner.lookup('service:keycloak-session');
+    assert.expect(14);
 
-    assert.expect(3);
+    await render(hbs`{{keycloak-session-config}}`);
 
-    await render(hbs`{{keycloak-session-link}}`);
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(1) th')).hasText('minValidity');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(1) td')).hasText('30');
 
-    assert.dom(this.element).hasText('No session');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(2) th')).hasText('onLoad');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(2) td')).hasText('login-required');
 
-    await service.initKeycloak();
-    await render(hbs`{{keycloak-session-link}}`);
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(3) th')).hasText('responseMode');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(3) td')).hasText('fragment');
 
-    assert.dom(this.element).hasText('Sign in');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(4) th')).hasText('flow');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(4) td')).hasText('standard');
 
-    await service.login();
-    await render(hbs`{{keycloak-session-link}}`);
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(5) th')).hasText('checkLoginIframe');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(5) td')).hasText('true');
 
-    assert.dom(this.element).hasText('Sign out');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(6) th')).hasText('checkLoginIframeInterval');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(6) td')).hasText('5');
 
-  });
-
-  test('it renders block', async function(assert) {
-
-    let service = this.owner.lookup('service:keycloak-session');
-
-    assert.expect(3);
-
-    // Template block usage:
-    await render(hbs`{{#keycloak-session-link}}xyz{{/keycloak-session-link}}`);
-
-    assert.dom(this.element).hasText('No session');
-
-    await service.initKeycloak();
-    await render(hbs`{{#keycloak-session-link}}xyz{{/keycloak-session-link}}`);
-
-    assert.dom(this.element).hasText('Sign in');
-
-    await service.login();
-    await render(hbs`{{#keycloak-session-link}}xyz{{/keycloak-session-link}}`);
-
-    assert.dom(this.element).hasText('Sign out');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(7) th')).hasText('idpHint');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(7) td')).hasText('');
 
   });
 
