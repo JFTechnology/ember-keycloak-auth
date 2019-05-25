@@ -12,7 +12,7 @@ This README outlines the details of collaborating on this Ember addon.
 @jftechnology/ember-keycloak-auth is an addon that can be installed with Ember CLI. It is intended for EmberJS applications accessing 
 REST services secured by the Keycloak authentication server from Redhat/JBoss (http://keycloak.jboss.org). 
 
-See [addon docs](https://jftechnology.github.io/ember-keycloak-auth) for full API details.
+See [addon docs](https://jftechnology.github.io/ember-keycloak-auth/versions/master) for full API details.
 
 
 ## Features overview
@@ -56,28 +56,7 @@ ember install @jftechnology/ember-keycloak-auth
 Usage
 ------------------------------------------------------------------------------
 
-See [addon docs](https://jftechnology.github.io/ember-keycloak-auth) for usage and API details.
-
-### Accessing a protected resource with the keycloak-adapter mixin
- 
-Adding the keycloak-adapter mixin ensures that all ember-data calls to your 
-back-end service will contain an HTTP Authentication header.
-
-```
-// app/adapters/application.js
-
-import JSONAPIAdapter from 'ember-data/adapters/json-api';
-import KeycloakAdapterMixin from 'ember-keycloak-auth/mixins/keycloak-adapter';
-
-export default JSONAPIAdapter.extend(KeycloakAdapterMixin, {
-
-});
-```
-
- 
-
-
-
+See [addon docs](https://jftechnology.github.io/ember-keycloak-auth/versions/master) for usage and API details.
 
 ## Running
 
