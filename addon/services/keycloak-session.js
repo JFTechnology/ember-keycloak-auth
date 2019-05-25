@@ -8,12 +8,12 @@ import { computed, get, set } from '@ember/object';
 const { Promise } = RSVP;
 
 /**
- * Ember service that wraps a Keycloak js instance.
+ * Injectable Ember service that wraps an application wide Keycloak js instance.
  *
- * @class KeycloakSession
+ * @class KeycloakSessionService
  * @public
  */
-export default class KeycloakSession extends Service {
+export default class KeycloakSessionService extends Service {
 
   /**
    * The injected Ember router service.

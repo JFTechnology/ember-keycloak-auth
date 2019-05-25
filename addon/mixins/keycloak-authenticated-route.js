@@ -7,7 +7,7 @@ import { inject } from '@ember/service';
  * before a route transition. If the keycloak session is not valid the keycloak session will redirect the browser
  * (by default) to the Keycloak login page.
  *
- * @class KeycloakAuthenticatedRoute
+ * @class KeycloakAuthenticatedRouteMixin
  * @public
  */
 export default Mixin.create({

@@ -9,7 +9,7 @@ import { inject } from '@ember/service';
  * (ii) add an Authorization header into any calls made via the adapter to the secured back end.
  * If the session check fails this mixin will throw an error - it will not redirect the user to the login page.
  *
- * @class KeycloakAdapter
+ * @class KeycloakAdapterMixin
  * @public
  */
 export default Mixin.create({

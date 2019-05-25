@@ -56,63 +56,9 @@ ember install @jftechnology/ember-keycloak-auth
 Usage
 ------------------------------------------------------------------------------
 
-### Initialising the service
-
-Next the keycloak service needs to be initialised. One obvious place to do this would be in the application route...
-
-```
-
-// app/routes/application.js
-
-  session: inject('keycloak-session'),
-
-  beforeModel: function () {
-
-    this._super(...arguments);
-
-      var session = this.get('session');
-
-      // Keycloak constructor arguments as described in the keycloak documentation.
-      var options = {
-        'url': 'https://auth.my-server.com/auth',
-        'realm': 'my-realm',
-        'clientId': 'my-client-id'
-      };
-
-      // this will result in a newly constructed keycloak object
-      session.installKeycloak(options);
-      
-      // set any keycloak init parameters where defaults need to be overidden
-      session.set('responseMode', 'fragment');
-      
-      // finally init the service and return promise to pause router.
-      return session.initKeycloak();
-  
-  }
-```
-
-### Protecting a route with the keycloak-authenticated-route mixin
-
-You can protect your routes by adding the keycloak-authenticated-route mixin. This 
-will check that the keycloak instance is authenticated and that you obtained a fresh access 
-token.
-
-```
-import Route from '@ember/routing/route';
-import KeycloakAuthenticatedRouteMixin from 'ember-keycloak-auth/mixins/keycloak-authenticated-route';
-
-export default Route.extend(KeycloakAuthenticatedRouteMixin, {
-
-  model: function (params) {
-
-    return ...
-  }
-
-});
-```
+See [addon docs](https://jftechnology.github.io/ember-keycloak-auth) for usage and API details.
 
 ### Accessing a protected resource with the keycloak-adapter mixin
- 
  
 Adding the keycloak-adapter mixin ensures that all ember-data calls to your 
 back-end service will contain an HTTP Authentication header.
