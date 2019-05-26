@@ -38,6 +38,7 @@ Compatibility
 
 ### Breaking changes v0.9+
 * Package name now scoped (ember-keycloak-auth:0.3.x -> @jftechnology/ember-keycloak-auth:0.9.x)
+* Keycloak 'checkLoginIframe' option now defaults to false
 
 ## ember-keycloak-auth v0.3
 * Ember.js v2.18 or above
@@ -46,15 +47,18 @@ Compatibility
 Installation
 ------------------------------------------------------------------------------
 
-* `git clone <repository-url>` this repository
-* `cd ember-keycloak-auth`
-* `yarn install`
-
 Run:
 
 ```
 ember install @jftechnology/ember-keycloak-auth
 ```
+
+For Ember 3.8 / 3.9 you need to install the decorator polyfill as well...
+
+```
+ember install ember-decorators-polyfill
+```
+
 
 Usage
 ------------------------------------------------------------------------------
