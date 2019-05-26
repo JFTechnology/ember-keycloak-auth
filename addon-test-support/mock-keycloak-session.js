@@ -5,7 +5,7 @@ export default class MockKeycloakSessionService extends KeycloakSessionService {
 
   installKeycloak(parameters) {
 
-    console.debug('Mock Keycloak Session :: keycloak');
+    console.debug('Mock Keycloak Session :: installKeycloak');
 
     let keycloak = new MockKeycloak(parameters);
 
@@ -19,6 +19,6 @@ export default class MockKeycloakSessionService extends KeycloakSessionService {
 
     this._keycloak = keycloak;
 
-    console.debug('Mock Keycloak Session :: install :: completed');
+    console.debug('Mock Keycloak Session :: installKeycloak :: completed');
   }
 }
