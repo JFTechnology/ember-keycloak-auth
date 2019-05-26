@@ -86,12 +86,12 @@ export default class KeycloakSessionService extends Service {
   flow = 'standard';
 
   /**
-   * Keycloak.init() option. Default 'true'.
+   * Keycloak.init() option. Default 'false'.
    *
    * @property checkLoginIframe
    * @type {boolean}
    */
-  checkLoginIframe = true;
+  checkLoginIframe = false;
 
   /**
    * Keycloak.init() option. Default '5'.
