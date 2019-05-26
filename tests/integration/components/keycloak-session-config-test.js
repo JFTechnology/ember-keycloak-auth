@@ -42,7 +42,7 @@ module('Integration | Component | keycloak-session-config', function(hooks) {
     assert.dom(this.element.querySelector('table tbody tr:nth-child(4) td')).hasText('standard');
 
     assert.dom(this.element.querySelector('table tbody tr:nth-child(5) th')).hasText('checkLoginIframe');
-    assert.dom(this.element.querySelector('table tbody tr:nth-child(5) td')).hasText('true');
+    assert.dom(this.element.querySelector('table tbody tr:nth-child(5) td')).hasText('false');
 
     assert.dom(this.element.querySelector('table tbody tr:nth-child(6) th')).hasText('checkLoginIframeInterval');
     assert.dom(this.element.querySelector('table tbody tr:nth-child(6) td')).hasText('5');
