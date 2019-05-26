@@ -235,7 +235,8 @@ export default class KeycloakSessionService extends Service {
     keycloak.onTokenExpired = this.onTokenExpired;
     keycloak.onAuthLogout = this.onAuthLogout;
 
-    this._keycloak = keycloak;
+    set(this, '_keycloak', new keycloak());
+    set(this, 'timestamp', new Date());
 
     console.debug('Keycloak session :: install :: completed');
   }
