@@ -27,7 +27,7 @@ module('Integration | Component | keycloak session profile', function(hooks) {
 
     let service = this.owner.lookup('service:keycloak-session');
 
-    assert.expect(7);
+    assert.expect(3);
 
     await render(hbs`{{keycloak-session-profile}}`);
 
@@ -36,16 +36,12 @@ module('Integration | Component | keycloak session profile', function(hooks) {
     await service.initKeycloak();
     await render(hbs`{{keycloak-session-profile}}`);
 
-    assert.dom(this.element.querySelector('.btn:nth-child(1)')).hasText('Refresh');
-    assert.dom(this.element.querySelector('.btn:nth-child(2)')).hasText('Login');
-    assert.dom(this.element.querySelector('.btn:nth-child(3)')).hasText('Logout');
+    assert.dom(this.element.querySelector('.btn:nth-child(1)')).hasText('Load user profile');
 
     await service.login();
     await render(hbs`{{keycloak-session-profile}}`);
 
-    assert.dom(this.element.querySelector('.btn:nth-child(1)')).hasText('Refresh');
-    assert.dom(this.element.querySelector('.btn:nth-child(2)')).hasText('Login');
-    assert.dom(this.element.querySelector('.btn:nth-child(3)')).hasText('Logout');
+    assert.dom(this.element.querySelector('.btn:nth-child(1)')).hasText('Load user profile');
 
   });
 
