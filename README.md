@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/JFTechnology/ember-keycloak-auth.svg)](https://travis-ci.org/JFTechnology/ember-keycloak-auth)
-[![Ember Observer Score](http://emberobserver.com/badges/ember-keycloak-auth.svg)](http://emberobserver.com/addons/ember-keycloak-auth)
-[![npm version](https://badge.fury.io/js/ember-keycloak-auth.svg)](https://badge.fury.io/js/ember-keycloak-auth)
+[![Ember Observer Score](https://emberobserver.com/badges/-jftechnology-ember-keycloak-auth.svg)](https://emberobserver.com/addons/@jftechnology/ember-keycloak-auth)
+[![npm version](https://badge.fury.io/js/%40jftechnology%2Fember-keycloak-auth.svg)](https://badge.fury.io/js/%40jftechnology%2Fember-keycloak-auth)
 [![Dependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth)
 [![devDependency Status](https://david-dm.org/JFTechnology/ember-keycloak-auth/dev-status.svg)](https://david-dm.org/JFTechnology/ember-keycloak-auth#info=devDependencies)
 
