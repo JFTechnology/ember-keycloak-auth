@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { action, computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import template from '../templates/components/keycloak-session-status';
+import template from '../templates/components/keycloak-session-profile';
 
 /**
  * @class KeycloakSessionProfile
@@ -22,24 +22,28 @@ export default class KeycloakSessionProfile extends Component {
 
   layout = template;
 
-  token = null;
-
-  @computed('token')
-  get roles() {
+  @computed('keycloakSession.timestamp')
+  get resourceRoles() {
 
     const token = get(this, 'keycloakSession.tokenParsed');
 
-    const array = [];
-
     if (token) {
-      const access = token['resource_access'];
-      Object.keys(access).forEach(k => {
-        const roles = access[k]['roles'];
-        roles.forEach(r => array.push(`${k}/${r}`));
-      })
+      return token['resource_access'];
     }
 
-    return array;
+    return {};
+  }
+
+  @computed('keycloakSession.timestamp')
+  get realmRoles() {
+
+    const token = get(this, 'keycloakSession.tokenParsed');
+
+    if (token) {
+      return token['realm_access'];
+    }
+
+    return {};
   }
 
   @action

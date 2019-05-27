@@ -1,7 +1,7 @@
 {{#if keycloakSession.ready}}
 
   <div>
-    <button type="button" {{action "loadUserProfile"}} class="btn btn-info">Load user profile</button>
+    <button type="button" {{action "loadUserProfile"}} class="btn btn-info m-2">Load user profile</button>
   </div>
 
   {{#with keycloakSession.profile as |profile|}}
@@ -21,13 +21,23 @@
           <td class="text-nowrap">{{profile.email}}</td>
         </tr>
         <tr>
-          <th>Roles</th>
+          <th>Realm roles</th>
           <td>
-            {{#each roles as |role|}}
-              <p>{{role}}</p>
+            {{#each realmRoles.roles as |role|}}
+              <p class="small p-0 m-0">{{role}}</p>
             {{/each}}
           </td>
         </tr>
+        {{#each-in resourceRoles as |resource roles|}}
+          <tr>
+            <th>Roles for resource '{{resource}}'</th>
+            <td>
+              {{#each roles.roles as |role|}}
+                <p class="small p-0 m-0">{{role}}</p>
+              {{/each}}
+            </td>
+          </tr>
+        {{/each-in}}
       </tbody>
     </table>
 
