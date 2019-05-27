@@ -5,6 +5,7 @@
   "keywords": [
     "jftechnology",
     "keycloak",
+    "oauth2",
     "ember-addon"
   ],
   "repository": {
@@ -32,7 +33,7 @@
   "dependencies": {
     "ember-cli-babel": "^7.7.3",
     "ember-cli-htmlbars": "^3.0.0",
-    "keycloak-js": "^4.7.0"
+    "keycloak-js": "^6.0.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
