@@ -46,11 +46,11 @@ export default class MockKeycloak {
   }
 
   hasRealmRole(role) {
-    return get(this, `parameters.realmRoles.${role}`);
+    return get(this, `parameters.realmRoles.${role}`) || false;
   }
 
   hasResourceRole(role, resource) {
-    return get(this, `parameters.resourceRoles.${resource}.${role}`);
+    return get(this, `parameters.resourceRoles.${resource}.${role}`) || false;
   }
 }
 
