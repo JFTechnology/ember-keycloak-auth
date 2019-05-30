@@ -258,7 +258,7 @@ export default class KeycloakSessionService extends Service {
             resolve(authenticated);
           })
           .error(reason => {
-            console.warn('Keycloak session ::  init success');
+            console.warn('Keycloak session ::  init failed');
             reject(reason);
           });
       });
@@ -355,7 +355,6 @@ export default class KeycloakSessionService extends Service {
 
       this.keycloak.updateToken(this.minValidity)
         .success(refreshed => {
-          // console.debug(`update token resolved as success refreshed='${refreshed}'`);
           resolve(refreshed);
         })
         .error(() => {
