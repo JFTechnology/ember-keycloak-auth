@@ -23,10 +23,11 @@ export default Mixin.create({
   keycloakSession: inject(),
 
   headers: computed('keycloakSession.timestamp', function() {
-    let token = this.get('keycloakSession.token');
+
+    let authorization = `Bearer ${this.get('keycloakSession.token')}`;
 
     return {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `${authorization}`
     };
   }),
 
@@ -44,9 +45,7 @@ export default Mixin.create({
     let self = this;
     let ajax = this._super;
 
-    let keycloakSession = this.get('keycloakSession');
-
-    return keycloakSession.updateToken().then(
+    return this.keycloakSession.updateToken().then(
       () =>
         /* We have a valid token - call the super method */
         ajax.apply(self, [url, type, hash]),
