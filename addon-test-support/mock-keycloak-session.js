@@ -1,5 +1,5 @@
 import KeycloakSessionService from '@jftechnology/ember-keycloak-auth/services/keycloak-session';
-import MockKeycloak from './mock-keycloak';
+import MockKeycloakInstance from './mock-keycloak-instance';
 
 export default class MockKeycloakSessionService extends KeycloakSessionService {
 
@@ -7,7 +7,7 @@ export default class MockKeycloakSessionService extends KeycloakSessionService {
 
     console.debug('Mock Keycloak Session :: installKeycloak');
 
-    let keycloak = new MockKeycloak(parameters);
+    let keycloak = new MockKeycloakInstance(parameters);
 
     keycloak.onReady = this.onReady;
     keycloak.onAuthSuccess = this.onAuthSuccess;
@@ -20,5 +20,9 @@ export default class MockKeycloakSessionService extends KeycloakSessionService {
     this._keycloak = keycloak;
 
     console.debug('Mock Keycloak Session :: installKeycloak :: completed');
+  }
+
+  get isStub() {
+    return true;
   }
 }

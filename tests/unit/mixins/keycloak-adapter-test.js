@@ -1,17 +1,26 @@
-import Object from '@ember/object';
-import KeycloakAdapterMixin from '@jftechnology/ember-keycloak-auth/mixins/keycloak-adapter';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { run } from '@ember/runloop';
+
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { login, setupKeycloakMirageAuth, setupKeycloakSession } from '@jftechnology/ember-keycloak-auth/test-support';
 
 module('Unit | Mixins | keycloak adapter', function(hooks) {
 
   setupTest(hooks);
+  setupMirage(hooks);
+  setupKeycloakSession(hooks);
+  setupKeycloakMirageAuth(hooks);
 
-  // Replace this with your real tests.
-  test('it works', assert => {
-    let MixinObject = Object.extend(KeycloakAdapterMixin);
-    let subject = MixinObject.create();
-    assert.ok(subject);
+  test('it works', async function(assert) {
+
+    login(this.owner);
+
+    const aModel = run(() => this.owner.lookup('service:store').createRecord('model-a'));
+
+    await aModel.save();
+
+    assert.ok(aModel);
   });
 
 });

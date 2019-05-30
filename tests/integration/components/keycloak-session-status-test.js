@@ -3,25 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-import MockKeycloakSession from '@jftechnology/ember-keycloak-auth/test-support/mock-keycloak-session';
+import {setupKeycloakSession} from '@jftechnology/ember-keycloak-auth/test-support';
 
 module('Integration | Component | keycloak session status', function(hooks) {
 
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function() {
-
-    this.owner.register('service:keycloak-session', MockKeycloakSession);
-
-    let service = this.owner.lookup('service:keycloak-session');
-
-    service.installKeycloak({
-        url: 'https://localhost',
-        realm: 'my-realm',
-        clientId: 'my-client-id'
-      }
-    );
-  });
+  setupKeycloakSession(hooks);
 
   test('it renders', async function(assert) {
 

@@ -1,25 +1,12 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-import MockKeycloakSession from '@jftechnology/ember-keycloak-auth/test-support/mock-keycloak-session';
+import { setupKeycloakSession } from '@jftechnology/ember-keycloak-auth/test-support';
 
 module('Unit | Services | mock keycloak session', function(hooks) {
 
   setupTest(hooks);
-
-  hooks.beforeEach(function() {
-
-    this.owner.register('service:keycloak-session', MockKeycloakSession);
-
-    let service = this.owner.lookup('service:keycloak-session');
-
-    service.installKeycloak({
-        url: 'https://localhost:1234',
-        realm: 'my-realm',
-        clientId: 'my-client-id'
-      }
-    );
-  });
+  setupKeycloakSession(hooks);
 
   test('service ok', async function(assert) {
 
