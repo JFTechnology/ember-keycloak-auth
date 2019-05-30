@@ -24,15 +24,11 @@ export const PROFILE = {
 };
 
 export const PARSED_TOKEN = {
-  "jti": "ae74d7c0-eba9-4fad-823e-b335b97eacc5",
-  "exp": 1559160546,
-  "nbf": 0,
-  "iat": 1559159946,
-  "iss": "https://auth.api.fxpress-payments.com/auth/realms/tradeconfo",
-  "aud": "ember-apps",
+  "iss": "https://localhost:4200/auth/realms/my-realm",
+  "aud": "my-client-id",
   "sub": "3c3fa2d3-5691-4581-a122-950327a6c424",
   "typ": "Bearer",
-  "azp": "ember-apps",
+  "azp": "my-client-id",
   "nonce": "d2e3f77b-1912-42be-bab1-f9bb13638dbd",
   "auth_time": 1559159364,
   "session_state": "8f229c34-cef0-409b-8707-9797ae721efb",
