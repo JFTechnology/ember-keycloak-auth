@@ -10,6 +10,8 @@ Router.map(function() {
 
   docsRoute(this, function() {
     this.route('index');
+    this.route('helpers');
+    this.route('test-support');
     this.route('usage');
   });
 

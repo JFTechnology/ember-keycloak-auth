@@ -50,5 +50,5 @@ Adding the keycloak-adapter mixin ensures that all ember-data calls to your back
 Authentication header in the form `'Authorization': 'Bearer qwdwesdfsdf...'`.
 
 {{#docs-demo as |demo|}}
-  {{demo.snippet name="adapter/application-snippet.js" label="Mixin protected adapter"}}
+  {{demo.snippet name="adapters/application-snippet.js" label="Mixin protected adapter"}}
 {{/docs-demo}}
