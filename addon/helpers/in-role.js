@@ -5,13 +5,13 @@ import { inject as service } from '@ember/service';
 /**
  * Helper that checks a keycloak session for realm or resource roles.
  *
- * Usage hasRole = (has-role 'my-role')
- * Usage hasRole = (has-role 'my-role' 'my-resource')
+ * Usage @enabled = (has-role 'my-role')
+ * Usage @enabled = (has-role 'my-role' 'my-resource')
  *
- * @class HasRoleHelper
+ * @class InRoleHelper
  * @public
  */
-export default class HasRoleHelper extends Helper {
+export default class InRoleHelper extends Helper {
 
   @service
   keycloakSession;
@@ -25,8 +25,6 @@ export default class HasRoleHelper extends Helper {
    * @return {boolean} True if user in role, else false.
    */
   compute([role, resource]) {
-
-    console.log(`(has-role ${role} ${resource})`);
 
     if (role && resource) {
       return this.keycloakSession.hasResourceRole(role, resource);
