@@ -4,6 +4,7 @@
   "description": "Keycloak JS Adapter as an Ember service and utilities",
   "keywords": [
     "jftechnology",
+    "authentication",
     "keycloak",
     "oauth2",
     "ember-addon"
