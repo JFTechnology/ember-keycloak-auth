@@ -227,6 +227,11 @@ export default class KeycloakSessionService extends Service {
 
     let keycloak = new Keycloak(parameters);
 
+    this._installKeycloak(keycloak);
+  }
+
+  _installKeycloak(keycloak) {
+
     keycloak.onReady = this.onReady;
     keycloak.onAuthSuccess = this.onAuthSuccess;
     keycloak.onAuthError = this.onAuthError;
