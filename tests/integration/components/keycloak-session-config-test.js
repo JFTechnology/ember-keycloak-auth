@@ -10,7 +10,7 @@ module('Integration | Component | keycloak-session-config', function(hooks) {
   setupRenderingTest(hooks);
   setupKeycloakSession(hooks);
 
-  test('it renders', async function(assert) {
+  test('test rendered output', async function(assert) {
 
     assert.expect(14);
 

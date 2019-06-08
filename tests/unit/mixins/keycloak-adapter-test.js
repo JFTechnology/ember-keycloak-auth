@@ -13,7 +13,7 @@ module('Unit | Mixins | keycloak adapter', function(hooks) {
   setupKeycloakSession(hooks);
   setupKeycloakMirageAuth(hooks);
 
-  test('it works', async function(assert) {
+  test('test save model', async function(assert) {
 
     login(this.owner);
 

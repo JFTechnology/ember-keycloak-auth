@@ -10,11 +10,11 @@ module('Integration | Component | keycloak session link', function(hooks) {
   setupRenderingTest(hooks);
   setupKeycloakSession(hooks);
 
-  test('it renders', async function(assert) {
-
-    let service = this.owner.lookup('service:keycloak-session');
+  test('test rendered output', async function(assert) {
 
     assert.expect(3);
+
+    let service = this.owner.lookup('service:keycloak-session');
 
     await render(hbs`{{keycloak-session-link}}`);
 
