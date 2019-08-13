@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 /**
  * Helper that checks a keycloak session for realm or resource roles.
  *
- * Usage @disabled = (has-role 'my-role')
- * Usage @disabled = (has-role 'my-role' 'my-resource')
+ * Usage @disabled = {{not-in-role 'my-role'}}
+ * Usage @disabled = {{not-in-role 'my-role' 'my-resource'}}
  *
  * @class HasRoleHelper
  * @public
