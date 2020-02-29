@@ -3,7 +3,7 @@
 ## Installation
 
 * `git clone <repository-url>`
-* `cd ember-keycloak-auth`
+* `cd @jftechnology/ember-keycloak-auth`
 * `yarn install`
 
 ## Linting
