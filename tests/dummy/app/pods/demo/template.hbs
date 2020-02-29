@@ -7,20 +7,20 @@
           <div class="form">
             <div class="form-group">
               <label>Keycloak server URL</label>
-              {{input
-                value=url
-                class="form-control"
-                placeholder="https://www.my-keycloak-server.com/auth"
-              }}
+              <Input
+                      @value={{this.url}}
+                      class="form-control"
+                      placeholder="https://www.my-keycloak-server.com/auth"
+              />
             </div>
           </div>
           <div class="form-group">
             <label>Realm</label>
-            {{input value=realm class="form-control" placeholder="my-realm"}}
+            <Input @value={{this.realm}} class="form-control" placeholder="my-realm"/>
           </div>
           <div class="form-group">
             <label>Client Id</label>
-            {{input value=clientId class="form-control" placeholder="my-client-id"}}
+            <Input @value={{this.clientId}} class="form-control" placeholder="my-client-id"/>
           </div>
         </div>
         <div class="card-footer">
@@ -29,7 +29,7 @@
       </div>
 
       <h5 class="pt-5">Configuration</h5>
-      {{keycloak-session-config}}
+      <KeycloakSessionConfig/>
 
       <h5 class="pt-5">Cookies</h5>
       <table class="table table-sm small">
@@ -40,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each allCookies as |cookie|}}
+          {{#each this.allCookies as |cookie|}}
             <tr>
               <th>{{cookie.name}}</th>
               <td>{{cookie.value}}</td>
@@ -58,39 +58,39 @@
 
       <ul>
         <li>
-          {{#link-to "demo.status"}}
+          <LinkTo @route="demo.status">
             Status
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.protected-mixin"}}
+          <LinkTo @route="demo.protected-mixin">
             Route protected by mixin
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.protected-metadata"}}
+          <LinkTo @route="demo.protected-metadata">
             Route protected by metadata
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.protected-metadata" (query-params param="test")}}
+          <LinkTo @route="demo.protected-metadata" @query={{hash param="test"}}>
             Route protected by metadata + query param
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.model-a" 1}}
+          <LinkTo @route="demo.model-a" @model={{1}}>
             Protected route to model A
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.model-a.model-b" 1 2}}
+          <LinkTo @route="demo.model-a.model-b" @models={{array 1 2}}>
             Protected route to model B
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "demo.unprotected"}}
+          <LinkTo @route="demo.unprotected">
             Unprotected route
-          {{/link-to}}
+          </LinkTo>
         </li>
       </ul>
 

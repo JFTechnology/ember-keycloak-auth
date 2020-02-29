@@ -1,9 +1,9 @@
 {{! template-lint-disable no-bare-strings }}
-{{#docs-header as |header|}}
+<DocsHeader as |header|>
   {{#header.link "demo"}}
     Demo routes
   {{/header.link}}
-  {{keycloak-session-link}}
-{{/docs-header}}
+  <KeycloakSessionLink/>
+</DocsHeader>
 
 {{outlet}}

@@ -1,10 +1,10 @@
-{{#if keycloakSession.ready}}
+{{#if this.keycloakSession.ready}}
 
   <div>
     <button type="button" {{action "loadUserProfile"}} class="btn btn-info m-2">Load user profile</button>
   </div>
 
-  {{#with keycloakSession.profile as |profile|}}
+  {{#with this.keycloakSession.profile as |profile|}}
 
     <table class="table">
       <tbody>
@@ -23,12 +23,12 @@
         <tr>
           <th>Realm roles</th>
           <td>
-            {{#each realmRoles.roles as |role|}}
+            {{#each this.realmRoles.roles as |role|}}
               <p class="small p-0 m-0">{{role}}</p>
             {{/each}}
           </td>
         </tr>
-        {{#each-in resourceRoles as |resource roles|}}
+        {{#each-in this.resourceRoles as |resource roles|}}
           <tr>
             <th>Roles for resource '{{resource}}'</th>
             <td>

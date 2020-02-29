@@ -2,9 +2,9 @@
 
 The keycloak session service needs to be initialised. One place to do this might be in the application route (this could also be done via initializers)...
 
-{{#docs-demo as |demo|}}
+<DocsDemo as |demo|>
   {{demo.snippet name="pods/demo/route-snippet.js" label="Application route"}}
-{{/docs-demo}}
+</DocsDemo>
 
 ## Protecting routes
 
@@ -29,9 +29,9 @@ trigger a token update check.
 
 Triggering token update checks via route metadata is as simple as this...
 
-{{#docs-demo as |demo|}}
+<DocsDemo as |demo|>
   {{demo.snippet name="pods/demo/protected-metadata/route.js" label="Metadata protected route"}}
-{{/docs-demo}}
+</DocsDemo>
 
 ### Using route mixin
 
@@ -39,9 +39,9 @@ It is also possible to trigger a token update check using the KeycloakAuthentica
   
 Requiring an update check via route mixin...
 
-{{#docs-demo as |demo|}}
+<DocsDemo as |demo|>
   {{demo.snippet name="pods/demo/protected-mixin/route.js" label="Mixin protected route"}}
-{{/docs-demo}}
+</DocsDemo>
 
 
 ## Accessing a protected resource with the keycloak-adapter mixin
@@ -49,6 +49,6 @@ Requiring an update check via route mixin...
 Adding the keycloak-adapter mixin ensures that all ember-data calls to your back-end service will contain an HTTP 
 Authentication header in the form `'Authorization': 'Bearer qwdwesdfsdf...'`.
 
-{{#docs-demo as |demo|}}
+<DocsDemo as |demo|>
   {{demo.snippet name="adapters/application-snippet.js" label="Mixin protected adapter"}}
-{{/docs-demo}}
+</DocsDemo>

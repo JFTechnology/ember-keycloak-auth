@@ -114,6 +114,7 @@ export default class KeycloakSessionService extends Service {
     super.init(...arguments);
 
     this.router.on('routeWillChange', this, 'routeWillChange');
+    this.router.on('routeDidChange', this, 'routeDidChange');
   }
 
   routeWillChange(transition) {
@@ -126,10 +127,18 @@ export default class KeycloakSessionService extends Service {
 
       if (info) {
 
+        console.debug(`Keycloak session :: routeWillChange + metadata :: ${this.router.currentURL} ${transition}`);
+
         this.checkTransition(transition);
       }
     }
   }
+
+  routeDidChange(transition) {
+
+    console.debug(`Keycloak session :: routeDidChange :: ${this.router.currentURL} ${transition}`);
+  }
+
 
   /**
    * Keycloak callback function.
@@ -333,7 +342,7 @@ export default class KeycloakSessionService extends Service {
    * @return {boolean} True if user in role.
    */
   hasRealmRole(role) {
-    return this.keycloak.hasRealmRole(role);
+    return this.keycloak && this.keycloak.hasRealmRole(role);
   }
 
   /**
@@ -345,14 +354,14 @@ export default class KeycloakSessionService extends Service {
    * @return {boolean} True if user in role.
    */
   hasResourceRole(role, resource) {
-    return this.keycloak.hasResourceRole(role, resource);
+    return this.keycloak && this.keycloak.hasResourceRole(role, resource);
   }
 
   /**
    * Delegates to the wrapped Keycloak instance's method using the minValidity property.
    *
    * @method updateToken
-   * @return {Promise}
+   * @return {Promise} Wrapped promise.
    */
   updateToken() {
 
@@ -373,7 +382,7 @@ export default class KeycloakSessionService extends Service {
    * Delegates to the wrapped Keycloak instance's method.
    *
    * @method clearToken
-   * @return {Promise} x
+   * @return {Promise} Wrapped promise.
    */
   clearToken() {
     this.keycloak.clearToken();
@@ -412,28 +421,25 @@ export default class KeycloakSessionService extends Service {
    * @return {String} URL to include as the Keycloak redirect
    * @private
    */
-  _parseRedirectUrl(router, transition) {
+  _parseRedirectUrl() {
 
-    let routeInfo = transition.to;
-    let queryParams = routeInfo.queryParams;
+    console.debug(`Keycloak session :: _parseRedirectUrl :: ${window.location.origin} + ${this.router.rootURL} + ${this.router.currentURL}`);
 
-    let params = [];
+    let redirect = '/';
 
-    routeInfo.find(info => info.paramNames.forEach(name => params.push(info.params[name])));
-
-    // console.debug(`Keycloak session :: _parseRedirectUrl :: '${routeInfo.name} ${JSON.stringify(params)} ${JSON.stringify(routeInfo.queryParams)}'`);
-
-    //First check the intent for an explicit url
-    let url = router.urlFor(routeInfo.name, ...params, { queryParams });
-
-    // console.debug(`Keycloak session :: _parseRedirectUrl :: ${window.location.origin} + ${router.rootUrl} + ${url}`);
-
-    if (router.rootUrl) {
-
-      return `${window.location.origin}${router.rootUrl}${url}`;
+    if (this.router.rootURL) {
+      redirect = redirect + this.router.rootURL;
     }
 
-    return `${window.location.origin}${url}`;
+    if (this.router.currentURL) {
+      redirect = redirect + this.router.currentURL;
+    }
+
+    redirect = window.location.origin + redirect.replace(new RegExp('//', 'g'), '/');
+
+    console.debug(`Keycloak session :: _parseRedirectUrl :: ${redirect}`);
+
+    return redirect;
   }
 
   /**

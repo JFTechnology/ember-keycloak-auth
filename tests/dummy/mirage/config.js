@@ -13,7 +13,10 @@ export default function() {
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
   this.passthrough('/docs/**');
-
+  this.passthrough(request => {
+    console.log(`passthrough ${JSON.stringify(request,null,2)}`);
+    return request.method==="POST";
+  });
   this.get('/model-as');
   this.post('/model-as');
 
