@@ -1,11 +1,13 @@
 /*global Keycloak*/
 /*eslint no-undef: "error"*/
-import Service, { inject as service } from '@ember/service';
+import Service, {inject as service} from '@ember/service';
+
+import Keycloak from 'keycloak-js';
 
 import RSVP from 'rsvp';
-import { computed, get, set } from '@ember/object';
+import {computed, get, set} from '@ember/object';
 
-const { Promise } = RSVP;
+const {Promise} = RSVP;
 
 /**
  * Injectable Ember service that wraps an application wide Keycloak js instance.
@@ -466,7 +468,7 @@ export default class KeycloakSessionService extends Service {
    */
   login(redirectUri) {
 
-    let options = { redirectUri };
+    let options = {redirectUri};
 
     //Add idpHint to options, if it is populated
     if (this.get('idpHint')) {
@@ -498,7 +500,7 @@ export default class KeycloakSessionService extends Service {
    */
   logout(redirectUri) {
 
-    let options = { redirectUri };
+    let options = {redirectUri};
 
     console.debug(`Keycloak session :: logout :: ${JSON.stringify(options)}`);
 

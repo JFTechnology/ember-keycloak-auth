@@ -1,48 +1,23 @@
 /* jshint node: true */
 /* eslint-disable node/no-extraneous-require */
-const RSVP = require('rsvp');
 const chalk = require('chalk');
-const fs = require('fs-extra');
 
 module.exports = {
 
-  description: 'ember-keycloak-auth',
+  description: '@jftechnology/ember-keycloak-auth',
 
-  normalizeEntityName: function () {
+  normalizeEntityName() {
     // this prevents an error when the entityName is
     // not specified (since that doesn't actually matter
     // to us
   },
 
-  afterInstall: function () {
-    let bowerDependencies = this.project.bowerDependencies();
-    let removal;
-    if ('keycloak' in bowerDependencies) {
-      removal = this.removePackageFromBowerJSON('keycloak');
-    } else {
-      removal = Promise.resolve();
-    }
-    return removal.then(() => this.addPackagesToProject([
+  afterInstall() {
+
+    this.ui.writeLine(chalk.green(`  adding keycloak-js package`));
+
+    return this.addPackagesToProject([
       {name: 'keycloak-js'}
-    ]));
+    ]);
   },
-
-  removePackageFromBowerJSON(dependency) {
-    this.ui.writeLine(chalk.green(`  uninstall bower package ${chalk.white(dependency)}`));
-    return new RSVP.Promise(function (resolve, reject) {
-      try {
-        let bowerJSONPath = 'bower.json';
-        let bowerJSON = fs.readJsonSync(bowerJSONPath);
-
-        delete bowerJSON.dependencies[dependency];
-
-        fs.writeJsonSync(bowerJSONPath, bowerJSON);
-
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
 };
