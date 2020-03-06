@@ -1,9 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-
-import template from '../templates/components/keycloak-session-link';
+import {action} from '@ember/object';
+import {inject as service} from '@ember/service';
 
 /**
  * @class KeycloakSessionLink
@@ -19,8 +17,6 @@ export default class KeycloakSessionLink extends Component {
    */
   @service()
   keycloakSession;
-
-  layout = template;
 
   @action
   login() {

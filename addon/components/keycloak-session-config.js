@@ -1,7 +1,6 @@
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 
-import template from '../templates/components/keycloak-session-config';
+import {inject as service} from '@ember/service';
 
 /**
  * @class KeycloakSessionConfig
@@ -17,7 +16,5 @@ export default class KeycloakSessionConfig extends Component {
    */
   @service()
   keycloakSession;
-
-  layout = template;
 
 }

@@ -1,9 +1,27 @@
 {{#if this.keycloakSession.ready}}
 
   <div class="m-2">
-    <button type="button" {{action "refresh"}} class="btn btn-info">Refresh</button>
-    <button type="button" {{action "login"}} class="btn btn-info">Login</button>
-    <button type="button" {{action "logout"}} class="btn btn-info">Logout</button>
+    <button
+      {{on "click" (fn this.refresh)}}
+            type="button"
+            class="btn btn-info"
+    >
+      Refresh
+    </button>
+    <button
+      {{on "click" (fn this.login)}}
+            type="button"
+            class="btn btn-info"
+    >
+      Login
+    </button>
+    <button
+      {{on "click" (fn this.logout)}}
+            type="button"
+            class="btn btn-info"
+    >
+      Logout
+    </button>
   </div>
 
   <table class="table">

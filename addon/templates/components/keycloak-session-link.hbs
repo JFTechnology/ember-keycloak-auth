@@ -1,9 +1,0 @@
-{{#if this.keycloakSession.ready}}
-  {{#if this.keycloakSession.authenticated}}
-    <a href="#" {{action "logout"}}><i class="fa fa-sign-out"></i> Sign out</a>
-  {{else}}
-    <a href="#" {{action "login"}}><i class="fa fa-sign-in"></i> Sign in</a>
-  {{/if}}
-{{else}}
-  No session
-{{/if}}

@@ -1,9 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-
-import template from '../templates/components/keycloak-session-status';
+import {action} from '@ember/object';
+import {inject as service} from '@ember/service';
 
 /**
  * @class KeycloakSessionStatus
@@ -19,8 +17,6 @@ export default class KeycloakSessionStatus extends Component {
    */
   @service()
   keycloakSession;
-
-  layout = template;
 
   @action
   refresh() {

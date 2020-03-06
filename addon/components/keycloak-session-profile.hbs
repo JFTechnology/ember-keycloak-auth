@@ -1,7 +1,13 @@
 {{#if this.keycloakSession.ready}}
 
   <div>
-    <button type="button" {{action "loadUserProfile"}} class="btn btn-info m-2">Load user profile</button>
+    <button
+      {{on "click" (fn this.loadUserProfile)}}
+            type="button"
+            class="btn btn-info m-2"
+    >
+      Load user profile
+    </button>
   </div>
 
   {{#with this.keycloakSession.profile as |profile|}}
