@@ -1,14 +1,14 @@
 import Controller from '@ember/controller';
 
-import { inject as service } from '@ember/service';
-import { action, computed } from '@ember/object';
+import {inject as service} from '@ember/service';
+import {action, computed} from '@ember/object';
 
 export default class DemoController extends Controller {
 
-  @service()
+  @service
   keycloakSession;
 
-  @service()
+  @service
   cookies;
 
   @computed()
@@ -20,7 +20,7 @@ export default class DemoController extends Controller {
 
     return Object.keys(cookies).reduce((acc, key) => {
       let value = cookies[key];
-      acc.push({ name: key, value });
+      acc.push({name: key, value});
 
       return acc;
     }, []);
@@ -30,7 +30,7 @@ export default class DemoController extends Controller {
 
     super.init(...arguments);
 
-    let cookies = this.get('cookies');
+    let cookies = this.cookies;
 
     this.set('url', cookies.read('keycloak-url'));
     this.set('realm', cookies.read('keycloak-realm'));
@@ -40,8 +40,8 @@ export default class DemoController extends Controller {
   @action
   initKeycloak() {
 
-    let session = this.get('keycloakSession');
-    let cookies = this.get('cookies');
+    let session = this.keycloakSession;
+    let cookies = this.cookies;
 
     let url = this.get('url');
     let realm = this.get('realm');

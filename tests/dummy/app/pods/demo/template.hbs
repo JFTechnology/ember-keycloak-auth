@@ -24,7 +24,13 @@
           </div>
         </div>
         <div class="card-footer">
-          <button {{action "initKeycloak"}} class="btn btn-block btn-primary">Store keycloak parameters</button>
+          <button
+            {{on "click" (fn this.initKeycloak)}}
+                  type="button"
+                  class="btn btn-block btn-primary"
+          >
+            Store keycloak parameters
+          </button>
         </div>
       </div>
 
