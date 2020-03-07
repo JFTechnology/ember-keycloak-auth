@@ -1,109 +1,47 @@
 <div class="container p-3">
 
   <div class="row">
-    <div class="col-5">
-      <div class="card bg-light">
-        <div class="card-body">
-          <div class="form">
-            <div class="form-group">
-              <label>Keycloak server URL</label>
-              <Input
-                      @value={{this.url}}
-                      class="form-control"
-                      placeholder="https://www.my-keycloak-server.com/auth"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Realm</label>
-            <Input @value={{this.realm}} class="form-control" placeholder="my-realm"/>
-          </div>
-          <div class="form-group">
-            <label>Client Id</label>
-            <Input @value={{this.clientId}} class="form-control" placeholder="my-client-id"/>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button
-            {{on "click" (fn this.initKeycloak)}}
-                  type="button"
-                  class="btn btn-block btn-primary"
-          >
-            Store keycloak parameters
-          </button>
-        </div>
-      </div>
-
-      <h5 class="pt-5">Configuration</h5>
-      <KeycloakSessionConfig/>
-
-      <h5 class="pt-5">Cookies</h5>
-      <table class="table table-sm small">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.allCookies as |cookie|}}
-            <tr>
-              <th>{{cookie.name}}</th>
-              <td>{{cookie.value}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-
-    </div>
-    <div class="col-7">
+    <div class="col">
 
       <h3 class="text-primary">
         Demo routes
       </h3>
 
-      <ul>
-        <li>
+      <div class="d-flex justify-content-between">
+        <span>
           <LinkTo @route="demo.status">
             Status
           </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="demo.protected-mixin">
-            Route protected by mixin
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="demo.protected-metadata">
-            Route protected by metadata
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="demo.protected-metadata" @query={{hash param="test"}}>
-            Route protected by metadata + query param
-          </LinkTo>
-        </li>
-        <li>
+        </span>
+        <span>
           <LinkTo @route="demo.model-a" @model={{1}}>
-            Protected route to model A
+            Route to model A
           </LinkTo>
-        </li>
-        <li>
+          <span class="d-block small text-muted">
+              Adapter will refresh token before ajax call
+            </span>
+        </span>
+        <span>
           <LinkTo @route="demo.model-a.model-b" @models={{array 1 2}}>
-            Protected route to model B
+            Route to nested model B
           </LinkTo>
-        </li>
-        <li>
+          <span class="d-block small text-muted">
+              Adapter will refresh token before ajax calls
+            </span>
+        </span>
+        <span>
           <LinkTo @route="demo.unprotected">
             Unprotected route
           </LinkTo>
-        </li>
-      </ul>
-
-      {{outlet}}
-
+        </span>
+      </div>
     </div>
   </div>
 
+  <div class="row mt-5">
+    <div class="col">
+      {{outlet}}
+    </div>
+  </div>
 </div>
 

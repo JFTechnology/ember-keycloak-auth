@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 
 export default class ApplicationRoute extends Route {
 
-  @service()
+  @service
   keycloakSession;
 
   /**
@@ -20,6 +20,7 @@ export default class ApplicationRoute extends Route {
       clientId: 'my-client-id',
     };
 
+    this.keycloakSession.verbose = true;
     this.keycloakSession.installKeycloak(options);
   }
 

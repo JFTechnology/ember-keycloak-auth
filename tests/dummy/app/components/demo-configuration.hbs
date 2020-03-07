@@ -1,0 +1,52 @@
+<div
+  {{did-insert (fn this.didInsert)}}
+        class="card bg-light"
+>
+
+  <div class="card-body">
+    <div class="form">
+      <div class="form-group">
+        <label>Keycloak server URL</label>
+        <Input
+                @value={{this.url}}
+                class="form-control"
+                placeholder="https://www.my-keycloak-server.com/auth"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Realm</label>
+      <Input @value={{this.realm}} class="form-control" placeholder="my-realm"/>
+    </div>
+    <div class="form-group">
+      <label>Client Id</label>
+      <Input @value={{this.clientId}} class="form-control" placeholder="my-client-id"/>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button
+      {{on "click" (fn this.initKeycloak)}}
+            type="button"
+            class="btn btn-block btn-primary"
+    >
+      Store keycloak parameters
+    </button>
+  </div>
+</div>
+
+<table class="table table-sm small pt-3">
+  <thead>
+    <tr>
+      <th>Cookie Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.allCookies as |cookie|}}
+      <tr>
+        <th>{{cookie.name}}</th>
+        <td>{{cookie.value}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

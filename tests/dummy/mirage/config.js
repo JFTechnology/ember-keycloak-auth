@@ -12,23 +12,23 @@ export default function() {
   // this.namespace = '/api';    // make this `/api`, for example, if your API is namespaced
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
-  this.passthrough('/docs/**');
-  this.passthrough(request => {
-    console.log(`passthrough ${JSON.stringify(request,null,2)}`);
-    return request.method==="POST";
-  });
   this.get('/model-as');
+  this.get('/model-as/:id');
   this.post('/model-as');
 
-  this.passthrough();
+  this.get('/model-bs');
+  this.get('/model-bs/:id');
+  this.post('/model-bs');
 
-  /*
-    Shorthand cheatsheet:
+  // addon documentation not handled by mirage
+  this.passthrough('/docs/**');
 
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
-
-    http://www.ember-cli-mirage.com/docs/v0.4.x/shorthands/
-  */
+  // POST requests will all be OAuth2 related - so they get passed through to configured Keycloak server
+  this.passthrough(request => {
+   // console.log(`passthrough ${JSON.stringify(request, null, 2)}`);
+    if (request.url === "/model-as" || request.url === "/model-as/1" || request.url === "/model-bs") {
+      return false;
+    }
+    return request.method === "POST" || request.url.startsWith("https://");
+  });
 }

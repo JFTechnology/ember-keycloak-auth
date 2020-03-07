@@ -1,11 +1,14 @@
 import Route from '@ember/routing/route';
 
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 
 export default class ApplicationRoute extends Route {
 
-  @service()
+  @service
   keycloakSession;
+
+  @service
+  store;
 
   @service()
   cookies;
@@ -30,6 +33,7 @@ export default class ApplicationRoute extends Route {
         clientId,
       };
 
+      this.keycloakSession.verbose = true;
       this.keycloakSession.installKeycloak(options);
     }
   }

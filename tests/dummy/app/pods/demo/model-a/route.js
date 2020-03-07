@@ -1,10 +1,13 @@
 import Route from '@ember/routing/route';
 
-import KeycloakAuthenticatedRouteMixin from '@jftechnology/ember-keycloak-auth/mixins/keycloak-authenticated-route';
+export default class ModelARoute extends Route {
 
-export default class ModelARoute extends Route.extend(KeycloakAuthenticatedRouteMixin) {
-
-  model() {
-    return this.store.createRecord('model-a', { name: 'Instance of Model A' });
+  /*
+   * Implements the RouteInfo Metadata API
+   */
+  buildRouteInfoMetadata() {
+    return {
+      updateKeycloakToken: true,
+    }
   }
 }

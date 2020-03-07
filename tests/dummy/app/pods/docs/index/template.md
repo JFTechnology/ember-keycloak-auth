@@ -6,49 +6,25 @@ The keycloak session service needs to be initialised. One place to do this might
   {{demo.snippet name="pods/demo/route-snippet.js" label="Application route"}}
 </DocsDemo>
 
-## Protecting routes
+## Ember data
 
-As OAuth2 tokens need to be refreshed periodically it is useful to be able to trigger OAuth2 token 
-update checks via the Keycloak Session Service before entering any route that might access a 
-protected resource. 
+Calls to an OAuth2 secured back end via Ember Data adapters typically require an Authorization bearer header...
 
-An OAuth2 token update update check will either
- - return silently (if a fresh token has already been obtained)
- - refresh a stale token (if current token is close to expiry)
- - redirect the browser to the configured Keycloak service if user is required to authenticate
+        {
+            Authorization: "Bearer 1234...etc"
+        }
+        
+This header can be obtained from the 'headers' property on the Keycloak session service. However it is before each call 
+to the secured back end is made we need ensure that the token is refreshed - and refresh it if stale (this is an asynchronous task).         
 
-### Using route metadata API
+The simplest way to do this is to intercept the JSONAPIAdapter (or RESTAdapter) ajax method. All backend requests pass 
+through this method which returns a Promise to the Ember data framework. The Keycloak session service provides a wrappedCall() 
+method which adds a token refresh check to the Promise chain to ensure that a fresh token is avai.
 
-The simplest (and recommended) way to trigger an OAuth2 token update check is using the 
-<a href="https://github.com/emberjs/rfcs/blob/master/text/0398-RouteInfo-Metadata.md">[0398-RouteInfo-Metadata]</a>
-API (introduced in Ember 3.8). 
-
-The Keycloak Session Service uses the public Ember Routing API to inspect the route info metadata for any route entered
-and if any the metadata of any segment of that route contains the `'updateKeycloakToken'` key with a value of true it will 
-trigger a token update check.
-
-Triggering token update checks via route metadata is as simple as this...
+The following snippet shows the few lines of code that need to be added to a JSONAPIAdapter to refresh the token (if required) 
+and ensure that the header is up-to-date...
 
 <DocsDemo as |demo|>
-  {{demo.snippet name="pods/demo/protected-metadata/route.js" label="Metadata protected route"}}
+  <demo.snippet @name="adapters/json-api-adapter-snippet.js" @label="JSONAPIAdapter with refresh" />
 </DocsDemo>
 
-### Using route mixin
-
-It is also possible to trigger a token update check using the KeycloakAuthenticatedRoute mixin.
-  
-Requiring an update check via route mixin...
-
-<DocsDemo as |demo|>
-  {{demo.snippet name="pods/demo/protected-mixin/route.js" label="Mixin protected route"}}
-</DocsDemo>
-
-
-## Accessing a protected resource with the keycloak-adapter mixin
- 
-Adding the keycloak-adapter mixin ensures that all ember-data calls to your back-end service will contain an HTTP 
-Authentication header in the form `'Authorization': 'Bearer qwdwesdfsdf...'`.
-
-<DocsDemo as |demo|>
-  {{demo.snippet name="adapters/application-snippet.js" label="Mixin protected adapter"}}
-</DocsDemo>
