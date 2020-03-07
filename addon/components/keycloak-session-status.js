@@ -15,7 +15,7 @@ export default class KeycloakSessionStatus extends Component {
    * @property keycloakSession
    * @type {KeycloakSession}
    */
-  @service()
+  @service
   keycloakSession;
 
   @action

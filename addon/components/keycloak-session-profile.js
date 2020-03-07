@@ -15,7 +15,7 @@ export default class KeycloakSessionProfile extends Component {
    * @property keycloakSession
    * @type {KeycloakSession}
    */
-  @service()
+  @service
   keycloakSession;
 
   @computed('keycloakSession.timestamp')

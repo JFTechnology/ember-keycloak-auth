@@ -15,7 +15,7 @@ export default class KeycloakSessionLink extends Component {
    * @property keycloakSession
    * @type {KeycloakSession}
    */
-  @service()
+  @service
   keycloakSession;
 
   @action
