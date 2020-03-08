@@ -1,13 +1,3 @@
-import {
-  CompatPromise,
-  KeycloakConfig,
-  KeycloakError,
-  KeycloakInitOptions,
-  KeycloakInstance,
-  KeycloakProfile,
-  KeycloakTokenParsed
-} from 'keycloak-js';
-
 import {AUTH_STORE} from '@jftechnology/ember-keycloak-auth/test-support';
 
 /**
@@ -16,43 +6,43 @@ import {AUTH_STORE} from '@jftechnology/ember-keycloak-auth/test-support';
  * @class MockKeycloakInstance
  * @public
  */
-export default class MockKeycloakInstance implements KeycloakInstance<"native"> {
+export default class MockKeycloakInstance {
 
-  parameters?: KeycloakConfig;
+  parameters;
 
-  options?: KeycloakInitOptions;
+  options;
 
-  _response: any;
+  _response;
 
-  _parsedToken?: KeycloakTokenParsed;
+  _parsedToken;
 
-  _profile?: KeycloakProfile;
+  _profile;
 
   get token() {
     return this._response.access_token;
   }
 
-  get tokenParsed(): KeycloakTokenParsed | undefined {
+  get tokenParsed() {
     return this._parsedToken;
   }
 
-  get subject(): string | undefined {
+  get subject() {
     return this.tokenParsed ? this.tokenParsed.sub : undefined;
   }
 
-  constructor(parameters: KeycloakConfig) {
+  constructor(parameters) {
 
     this.parameters = parameters;
   }
 
-  init(options: KeycloakInitOptions): CompatPromise<"native", boolean, KeycloakError> {
+  init(options) {
     console.log(`MockKeycloak :: init :: ${options}`);
     this.options = options;
     this.onReady(false);
     return new MockPromise(true, null);
   }
 
-  login(options: any): Promise<void> {
+  login(options) {
     console.log(`MockKeycloak :: login :: ${options}`);
     this._response = AUTH_STORE.response;
     this._parsedToken = AUTH_STORE.parsedToken;
@@ -61,30 +51,30 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
     return new MockPromise(true, false);
   }
 
-  logout(options: any): Promise<void> {
+  logout(options) {
     console.log(`MockKeycloak :: logout :: ${options}`);
     this.onAuthLogout();
     return new MockPromise(true, false);
   }
 
-  updateToken(minValidity: number): CompatPromise<"native", boolean, boolean> {
+  updateToken(minValidity) {
     console.log(`MockKeycloak :: updateToken :: ${minValidity}`);
     return new MockPromise(true, false);
   }
 
-  clearToken(): void {
+  clearToken() {
     console.log(`MockKeycloak :: clearToken`);
     this._response = null;
     this._parsedToken = undefined;
     this._profile = undefined;
   }
 
-  loadUserProfile(): CompatPromise<"native", KeycloakProfile, void> {
+  loadUserProfile() {
     console.log(`MockKeycloak :: loadUserProfile`);
     return new MockPromise(this._profile, false);
   }
 
-  hasRealmRole(role: string): boolean {
+  hasRealmRole(role) {
 
     if (this.tokenParsed && this.tokenParsed.realm_access) {
       return (this.tokenParsed.realm_access.roles || []).includes(role);
@@ -93,7 +83,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
     return false;
   }
 
-  hasResourceRole(role: string, resource: string): boolean {
+  hasResourceRole(role, resource) {
 
     if (this.tokenParsed && this.tokenParsed.resource_access && this.tokenParsed.resource_access[resource]) {
       return (this.tokenParsed.resource_access[resource].roles || []).includes(role);
@@ -108,7 +98,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @param options {object} Supports same options as Keycloak#login but `action` is
    *                set to `'register'`.
    */
-  register(): Promise<void> {
+  register() {
     throw new Error("not implemented");
   }
 
@@ -116,7 +106,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * Redirects to the Account Management Console.
    * @method {accountManagement}
    */
-  accountManagement(): Promise<void> {
+  accountManagement() {
     throw new Error("not implemented");
   }
 
@@ -125,7 +115,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @method {createLoginUrl}
    * @param options {object} Supports same options as Keycloak#login.
    */
-  createLoginUrl(): string {
+  createLoginUrl() {
     throw new Error("not implemented");
   }
 
@@ -136,7 +126,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @param options {object} Logout options.
    * @param options.redirectUri {string} Specifies the uri to redirect to after logout.
    */
-  createLogoutUrl(): string {
+  createLogoutUrl() {
     throw new Error("not implemented");
   }
 
@@ -146,7 +136,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @param options {object} Supports same options as Keycloak#createLoginUrl but
    *                `action` is set to `'register'`.
    */
-  createRegisterUrl(): string {
+  createRegisterUrl() {
     throw new Error("not implemented");
   }
 
@@ -154,7 +144,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * Returns the URL to the Account Management Console.
    * @method {createAccountUrl}
    */
-  createAccountUrl(): string {
+  createAccountUrl() {
     throw new Error("not implemented");
   }
 
@@ -164,7 +154,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @method {isTokenExpired}
    * @param minValidity {number} If not specified, `0` is used.
    */
-  isTokenExpired(): boolean {
+  isTokenExpired() {
     throw new Error("not implemented");
   }
 
@@ -172,7 +162,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * @private Undocumented.
    * @method {loadUserInfo}
    */
-  loadUserInfo(): Promise<{}> {
+  loadUserInfo() {
     throw new Error("not implemented");
   }
 
@@ -180,7 +170,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * Called when the adapter is initialized.
    * @method {onReady}
    */
-  onReady(authenticated?: boolean): void {
+  onReady(authenticated) {
     console.log(`on ready ${authenticated}`);
   }
 
@@ -188,7 +178,7 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * Called when a user is successfully authenticated.
    * @method {onAuthSuccess}
    */
-  onAuthSuccess(): void {
+  onAuthSuccess() {
 
   }
 
@@ -197,22 +187,22 @@ export default class MockKeycloakInstance implements KeycloakInstance<"native"> 
    * status iframe is enabled, or in Cordova mode).
    * @method {onAuthLogout}
    */
-  onAuthLogout(): void {
+  onAuthLogout() {
 
   }
 }
 
-class MockPromise extends Promise<any> {
+class MockPromise extends Promise {
 
-  successValue: any;
+  successValue;
 
-  errorValue: any;
+  errorValue;
 
-  resolve: any;
+  resolve;
 
-  reject: any;
+  reject;
 
-  constructor(successValue: any, errorValue: any) {
+  constructor(successValue, errorValue) {
     super((/*resolve, reject*/) => {
       // this.resolve = resolve;
       // this.reject = reject;
@@ -221,7 +211,7 @@ class MockPromise extends Promise<any> {
     this.errorValue = errorValue;
   }
 
-  then<TResult1 = any, TResult2 = never>(onfulfilled?: (value: any) => TResult1, onrejected?: (reason: any) => TResult2) {
+  then(onfulfilled, onrejected) {
 
     if (this.successValue) {
       if (onfulfilled) {

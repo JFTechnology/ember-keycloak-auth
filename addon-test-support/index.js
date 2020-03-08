@@ -1,5 +1,5 @@
 import MockKeycloakSession from './mock-keycloak-session';
-import { assert } from '@ember/debug';
+import {assert} from '@ember/debug';
 
 export const OPENID_RESPONSE = {
   "access_token": "the-access-token-the-real-thing-is-much-much-longer",
