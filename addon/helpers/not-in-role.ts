@@ -1,8 +1,7 @@
 import Helper from '@ember/component/helper';
 
 import {inject as service} from '@ember/service';
-
-import KeycloakSession from '@jftechnology/ember-keycloak-auth/services/keycloak-session';
+import {KeycloakAdapterService} from "@jftechnology/ember-keycloak-auth";
 
 /**
  * Helper that checks a keycloak session for realm or resource roles.
@@ -16,7 +15,7 @@ import KeycloakSession from '@jftechnology/ember-keycloak-auth/services/keycloak
 export default class NotInRoleHelper extends Helper {
 
   @service
-  keycloakSession!: KeycloakSession;
+  keycloakSession!: KeycloakAdapterService;
 
   /**
    * Delegates to the wrapped Keycloak instance's method.
