@@ -1,6 +1,8 @@
 import Helper from '@ember/component/helper';
 
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
+
+import {KeycloakAdapterService} from '@jftechnology/ember-keycloak-auth';
 
 /**
  * Helper that checks a keycloak session for realm or resource roles.
@@ -14,26 +16,18 @@ import { inject as service } from '@ember/service';
 export default class InRoleHelper extends Helper {
 
   @service
-  keycloakSession;
+  keycloakSession!: KeycloakAdapterService;
 
   /**
    * Delegates to the wrapped Keycloak instance's method.
    *
-   * @method hasResourceRole
+   * @method compute
    * @param role {string} The role to check
    * @param resource {string} The resource to check
    * @return {boolean} True if user in role, else false.
    */
-  compute([role, resource]) {
+  compute([role, resource]: any) {
 
-    if (role && resource) {
-      return this.keycloakSession.hasResourceRole(role, resource);
-    }
-
-    if (role) {
-      return this.keycloakSession.hasRealmRole(role);
-    }
-
-    return false;
+    return this.keycloakSession.inRole(role, resource);
   }
 }

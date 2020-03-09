@@ -1,5 +1,6 @@
 /*eslint no-undef: "error"*/
 import Service, {inject as service} from '@ember/service';
+import {KeycloakAdapterService} from '@jftechnology/ember-keycloak-auth';
 
 import Keycloak, {
   KeycloakConfig,
@@ -26,7 +27,7 @@ const {Promise} = RSVP;
  * @class KeycloakSessionService
  * @public
  */
-export default class KeycloakSessionService extends Service {
+export default class KeycloakSessionService extends Service implements KeycloakAdapterService {
 
   /**
    * The injected Ember router service.
@@ -265,8 +266,8 @@ export default class KeycloakSessionService extends Service {
    * @param role {string} The role to check
    * @return {boolean} True if user in role.
    */
-  hasRealmRole(role: string) {
-    return this.keycloak && this.keycloak.hasRealmRole(role);
+  hasRealmRole(role: string): boolean {
+    return !!(this.keycloak && this.keycloak.hasRealmRole(role));
   }
 
   /**
@@ -277,8 +278,21 @@ export default class KeycloakSessionService extends Service {
    * @param resource {string} The resource to check
    * @return {boolean} True if user in role.
    */
-  hasResourceRole(role: string, resource: string) {
-    return this.keycloak && this.keycloak.hasResourceRole(role, resource);
+  hasResourceRole(role: string, resource: string): boolean {
+    return !!(this.keycloak && this.keycloak.hasResourceRole(role, resource));
+  }
+
+  inRole(role: string, resource: string): boolean {
+
+    if (role && resource) {
+      return this.hasResourceRole(role, resource);
+    }
+
+    if (role) {
+      return this.hasRealmRole(role);
+    }
+
+    return false;
   }
 
   /**
@@ -356,18 +370,27 @@ export default class KeycloakSessionService extends Service {
    * Delegates to the wrapped Keycloak instance's method.
    *
    * @method loadUserProfile
-   * @return {Promise} Resolves on server response
+   * @return {RSVP.Promise} Resolves on server response
    */
-  loadUserProfile(): Promise<any> | void {
+  loadUserProfile(): RSVP.Promise<any> {
 
-    if (this.keycloak) {
-      this.keycloak.loadUserProfile()
-        .then(
-          profile => {
-            console.debug(`Loaded profile for ${profile.id}`);
-            set(this, 'profile', profile);
-          });
-    }
+    return new RSVP.Promise((resolve, reject) => {
+
+      if (this.keycloak) {
+        this.keycloak.loadUserProfile()
+          .then(
+            profile => {
+              console.debug(`Loaded profile for ${profile.id}`);
+              set(this, 'profile', profile);
+              resolve(profile);
+            },
+            error => {
+              reject(error);
+            });
+      } else {
+        reject(new Error("KeycloakSessionService :: no installed keycloak instance"));
+      }
+    });
   }
 
   /**

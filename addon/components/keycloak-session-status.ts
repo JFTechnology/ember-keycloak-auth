@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 
+import {KeycloakAdapterService} from '@jftechnology/ember-keycloak-auth';
+
 /**
  * @class KeycloakSessionStatus
  * @public
@@ -13,10 +15,10 @@ export default class KeycloakSessionStatus extends Component {
    * An injected keycloak session.
    *
    * @property keycloakSession
-   * @type {KeycloakSession}
+   * @type {KeycloakAdapterService}
    */
   @service
-  keycloakSession;
+  keycloakSession!: KeycloakAdapterService;
 
   @action
   refresh() {
@@ -27,11 +29,15 @@ export default class KeycloakSessionStatus extends Component {
 
   @action
   login() {
-    this.keycloakSession.login();
+    this.keycloakSession.login().then(result => {
+      console.debug(result);
+    });
   }
 
   @action
   logout() {
-    this.keycloakSession.logout();
+    this.keycloakSession.logout().then(result => {
+      console.debug(result);
+    });
   }
 }
