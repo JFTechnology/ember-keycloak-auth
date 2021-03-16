@@ -33,7 +33,7 @@ jobs:
           yarn lint:js
           yarn test
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   tag-and-publish:
     needs:
@@ -75,7 +75,7 @@ jobs:
           yarn publish
           git push --follow-tags
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Yarn publish
         if: startsWith(env.BRANCH, 'beta-')
@@ -87,4 +87,4 @@ jobs:
           yarn publish
           git push --follow-tags
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
