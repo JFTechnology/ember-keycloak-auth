@@ -70,6 +70,7 @@ jobs:
         run: |
           git config --global user.email "stephen.flynn@jftechnology.comm"
           git config --global user.name "JFT Devops"
+          yarn --frozen-lockfile
           yarn version --patch
           yarn publish
           git push --follow-tags
@@ -81,6 +82,7 @@ jobs:
         run: |
           git config --global user.email "stephen.flynn@jftechnology.com"
           git config --global user.name "JFT Devops"
+          yarn --frozen-lockfile
           yarn version --prerelease
           yarn publish
           git push --follow-tags
