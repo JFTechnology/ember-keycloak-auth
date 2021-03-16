@@ -71,6 +71,7 @@ jobs:
           git config --global user.email "stephen.flynn@jftechnology.comm"
           git config --global user.name "JFT Devops"
           yarn version --patch
+          yarn publish
           git push --follow-tags
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -81,6 +82,7 @@ jobs:
           git config --global user.email "stephen.flynn@jftechnology.com"
           git config --global user.name "JFT Devops"
           yarn version --prerelease
+          yarn publish
           git push --follow-tags
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
