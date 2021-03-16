@@ -1,0 +1,86 @@
+name: Build and test
+
+on:
+  push:
+
+jobs:
+  lint-and-test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Lint and test
+        run: |
+          yarn --frozen-lockfile
+          yarn lint:hbs
+          yarn lint:js
+          yarn test
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  tag-and-publish:
+    needs:
+      - lint-and-test
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Extract Branch Name
+        run: |
+          echo "BRANCH=$(echo ${GITHUB_REF##*/})" >> $GITHUB_ENV
+          echo "Branch name : $BRANCH"
+
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Yarn publish
+        if: env.BRANCH == 'main'
+        run: |
+          git config --global user.email "stephen.flynn@jftechnology.comm"
+          git config --global user.name "JFT Devops"
+          yarn version --patch
+          git push --follow-tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Yarn publish
+        if: startsWith(env.BRANCH, 'beta-')
+        run: |
+          git config --global user.email "stephen.flynn@jftechnology.com"
+          git config --global user.name "JFT Devops"
+          yarn version --prerelease
+          git push --follow-tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
