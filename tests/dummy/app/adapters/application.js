@@ -1,9 +1,6 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 
-import KeycloakSession from '@jftechnology/ember-keycloak-auth/services/keycloak-session';
-
 import {inject as service} from "@ember/service";
-import RSVP from "rsvp";
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
 
@@ -14,9 +11,9 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
    * @type {KeycloakSession}
    */
   @service
-  keycloakSession!: KeycloakSession;
+  keycloakSession;
 
-  get headers(): {} {
+  get headers() {
     console.log(`ApplicationAdapter :: headers() -> ${JSON.stringify(this.keycloakSession.headers, null, 2)}`);
     return this.keycloakSession.headers;
   }
@@ -31,7 +28,7 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
    * @return {Promise}
    * @private
    */
-  ajax(url: string, type: string, hash: {}): RSVP.Promise<any> {
+  ajax(url, type, hash) {
     console.log(`ApplicationAdapter :: ajax(${url} / ${type} / ${JSON.stringify(hash, null, 2)})`);
     return this.keycloakSession.wrappedCall(() => super.ajax(url, type, hash));
   }
