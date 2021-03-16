@@ -27,10 +27,8 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test && yarn lint:js && yarn lint:hbs",
+    "test": "ember test",
     "test:all": "ember try:each",
-    "preversion": "yarn test",
-    "postversion": "git push && git push --tags && yarn publish && echo \"Successfully released version $npm_package_version!\"",
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean"
   },
