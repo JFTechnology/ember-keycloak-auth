@@ -2,21 +2,21 @@
 
   <div class="m-2">
     <button
-      {{on "click" (fn this.refresh)}}
+      {{on "click" this.refresh}}
             type="button"
             class="btn btn-info"
     >
       Refresh
     </button>
     <button
-      {{on "click" (fn this.login)}}
+      {{on "click" this.login}}
             type="button"
             class="btn btn-info"
     >
       Login
     </button>
     <button
-      {{on "click" (fn this.logout)}}
+      {{on "click" this.logout}}
             type="button"
             class="btn btn-info"
     >

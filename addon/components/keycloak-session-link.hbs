@@ -1,10 +1,10 @@
 {{#if this.keycloakSession.ready}}
   {{#if this.keycloakSession.authenticated}}
-    <a href="#" {{on "click" (fn this.logout)}}>
+    <a href="#" {{on "click" this.logout}}>
       <i class="fa fa-sign-out"></i> Sign out
     </a>
   {{else}}
-    <a href="#" {{on "click" (fn this.login)}}>
+    <a href="#" {{on "click" this.login}}>
       <i class="fa fa-sign-in"></i> Sign in
     </a>
   {{/if}}

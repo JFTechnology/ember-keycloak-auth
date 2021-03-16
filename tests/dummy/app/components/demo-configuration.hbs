@@ -1,5 +1,5 @@
 <div
-  {{did-insert (fn this.didInsert)}}
+  {{did-insert this.didInsert}}
         class="card bg-light"
 >
 
@@ -25,7 +25,7 @@
   </div>
   <div class="card-footer">
     <button
-      {{on "click" (fn this.initKeycloak)}}
+      {{on "click" this.initKeycloak}}
             type="button"
             class="btn btn-block btn-primary"
     >
