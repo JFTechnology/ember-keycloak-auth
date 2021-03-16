@@ -19,6 +19,8 @@ module.exports = {
     browser: true
   },
   rules: {
+    'ember/no-computed-properties-in-native-classes': 'warn',
+    'ember/no-get': 'warn',
     'ember/no-jquery': 'error'
   },
   overrides: [
