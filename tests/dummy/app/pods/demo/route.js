@@ -13,9 +13,8 @@ export default class ApplicationRoute extends Route {
   @service()
   cookies;
 
-  init() {
-
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     // if required constructor parameters are available as cookies go ahead in init the service.
     // this should be replaced by initialization code when used in an application

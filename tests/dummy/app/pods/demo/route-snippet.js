@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 
 export default class ApplicationRoute extends Route {
 
@@ -10,9 +10,8 @@ export default class ApplicationRoute extends Route {
   /**
    * Collect keycloak options and install the Keycloak service.
    */
-  init() {
-
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     let options = {
       url: 'https://auth.myserver.com/auth',

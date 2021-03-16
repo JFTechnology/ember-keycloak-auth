@@ -1,4 +1,4 @@
-import JSONAPIAdapter from 'ember-data/adapters/json-api';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 
 import KeycloakSession from '@jftechnology/ember-keycloak-auth/services/keycloak-session';
 

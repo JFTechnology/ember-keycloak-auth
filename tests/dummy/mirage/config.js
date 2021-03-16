@@ -22,6 +22,7 @@ export default function() {
 
   // addon documentation not handled by mirage
   this.passthrough('/docs/**');
+  this.passthrough('/versions.json');
 
   // POST requests will all be OAuth2 related - so they get passed through to configured Keycloak server
   this.passthrough(request => {

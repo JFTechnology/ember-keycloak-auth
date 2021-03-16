@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 
+import {tracked} from '@glimmer/tracking';
 import {inject as service} from '@ember/service';
 import {action, computed} from '@ember/object';
 
@@ -11,30 +12,36 @@ export default class DemoController extends Controller {
   @service
   cookies;
 
+  @tracked
+  url;
+
+  @tracked
+  realm;
+
+  @tracked
+  clientId;
+
   @computed()
   get allCookies() {
 
-    let cookieService = this.get('cookies');
+    let currentCookies = this.cookies.read();
 
-    let cookies = cookieService.read();
-
-    return Object.keys(cookies).reduce((acc, key) => {
-      let value = cookies[key];
+    return Object.keys(currentCookies).reduce((acc, key) => {
+      let value = currentCookies[key];
       acc.push({name: key, value});
 
       return acc;
     }, []);
   }
 
-  init() {
-
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     let cookies = this.cookies;
 
-    this.set('url', cookies.read('keycloak-url'));
-    this.set('realm', cookies.read('keycloak-realm'));
-    this.set('clientId', cookies.read('keycloak-clientId'));
+    this.url = cookies.read('keycloak-url');
+    this.realm = cookies.read('keycloak-realm');
+    this.clientId = cookies.read('keycloak-clientId');
   }
 
   @action
@@ -43,21 +50,17 @@ export default class DemoController extends Controller {
     let session = this.keycloakSession;
     let cookies = this.cookies;
 
-    let url = this.get('url');
-    let realm = this.get('realm');
-    let clientId = this.get('clientId');
-
     // save details as cookies for subsequent initializations
-    cookies.write('keycloak-url', url);
-    cookies.write('keycloak-realm', realm);
-    cookies.write('keycloak-clientId', clientId);
+    cookies.write('keycloak-url', this.url);
+    cookies.write('keycloak-realm', this.realm);
+    cookies.write('keycloak-clientId', this.clientId);
 
-    if (url && realm && clientId) {
+    if (this.url && this.realm && this.clientId) {
 
       let options = {
-        url,
-        realm,
-        clientId,
+        url: this.url,
+        realm: this.realm,
+        clientId: this.clientId,
       };
 
       session.installKeycloak(options);

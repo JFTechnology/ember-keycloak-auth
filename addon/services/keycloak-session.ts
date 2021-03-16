@@ -36,11 +36,11 @@ export default class KeycloakSessionService extends Service implements KeycloakA
    * @type {RouterService}
    */
   @service
-  router!: RouterService;
+  declare router: RouterService;
 
-  _keycloak?: KeycloakInstance<"native">;
+  _keycloak: KeycloakInstance | undefined;
 
-  profile?: KeycloakProfile;
+  profile: KeycloakProfile | undefined;
 
   /**
    * Value in seconds used in calls to KeyCloak.updateToken(minValidity). Default 30.
@@ -72,7 +72,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
    * @property timestamp
    * @type {Date}
    */
-  timestamp?: Date;
+  timestamp: Date | undefined;
 
   /**
    * Keycloak.init() option. Should be one of 'check-sso' or 'login-required'. Default 'login-required'.
@@ -143,12 +143,12 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       console.debug('KeycloakSessionService :: install');
     }
 
-    let keycloak: KeycloakInstance<"native"> = Keycloak<"native">(parameters);
+    let keycloak: KeycloakInstance = Keycloak(parameters);
 
     this._installKeycloak(keycloak);
   }
 
-  _installKeycloak(keycloak: KeycloakInstance<"native">) {
+  _installKeycloak(keycloak: KeycloakInstance) {
 
     keycloak.onReady = this.onReady;
     keycloak.onAuthSuccess = this.onAuthSuccess;
@@ -177,18 +177,16 @@ export default class KeycloakSessionService extends Service implements KeycloakA
 
     let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
 
-    options.promiseType = "native";
-
     if (this.keycloak) {
       let keycloak = this.keycloak;
       return new Promise((resolve, reject) => {
         keycloak.init(options)
           .then(
-            authenticated => {
+            (authenticated: boolean) => {
               console.info('KeycloakSessionService :: init complete');
               resolve(authenticated);
             },
-            reason => {
+            (reason: unknown) => {
               console.warn('KeycloakSessionService :: init failed');
               reject(reason);
             });
@@ -203,7 +201,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
    * @type {Keycloak}
    */
   @computed('_keycloak', 'timestamp')
-  get keycloak(): KeycloakInstance<"native"> | undefined {
+  get keycloak(): KeycloakInstance | undefined {
     return this._keycloak;
   }
 
@@ -308,7 +306,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       if (this.keycloak) {
         this.keycloak.updateToken(this.minValidity)
           .then(
-            refreshed => {
+            (refreshed: any) => {
               resolve(refreshed);
             },
             () => {
@@ -379,12 +377,12 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       if (this.keycloak) {
         this.keycloak.loadUserProfile()
           .then(
-            profile => {
+            (profile: KeycloakProfile) => {
               console.debug(`Loaded profile for ${profile.id}`);
               set(this, 'profile', profile);
               resolve(profile);
             },
-            error => {
+            (error: unknown) => {
               reject(error);
             });
       } else {
