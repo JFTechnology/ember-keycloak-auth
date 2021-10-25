@@ -191,7 +191,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       console.debug('KeycloakSessionService :: init');
     }
 
-    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow', 'silentCheckSsoRedirectUri', 'enableLogging';
+    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow', 'silentCheckSsoRedirectUri', 'enableLogging');
 
     options.promiseType = "native";
 
