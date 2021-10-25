@@ -124,6 +124,14 @@ export default class KeycloakSessionService extends Service implements KeycloakA
    * @type {String}
    */
   silentCheckSsoRedirectUri?: string;
+  
+    /**
+   * Keycloak.init() option.
+   *
+   * @property enableLogging
+   * @type {boolean}
+   */
+  enableLogging?: string;
 
   /**
    * Keycloak.login() option.
@@ -183,7 +191,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       console.debug('KeycloakSessionService :: init');
     }
 
-    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow', 'silentCheckSsoRedirectUri');
+    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow', 'silentCheckSsoRedirectUri', 'e);
 
     options.promiseType = "native";
 
