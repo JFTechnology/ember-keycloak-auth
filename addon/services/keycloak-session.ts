@@ -118,6 +118,22 @@ export default class KeycloakSessionService extends Service implements KeycloakA
   checkLoginIframeInterval: number = 5;
 
   /**
+   * Keycloak.init() option.
+   *
+   * @property silentCheckSsoRedirectUri
+   * @type {String}
+   */
+  silentCheckSsoRedirectUri?: string;
+  
+    /**
+   * Keycloak.init() option.
+   *
+   * @property enableLogging
+   * @type {boolean}
+   */
+  enableLogging?: boolean;
+
+  /**
    * Keycloak.login() option.
    *
    * @property idpHint
@@ -175,7 +191,7 @@ export default class KeycloakSessionService extends Service implements KeycloakA
       console.debug('KeycloakSessionService :: init');
     }
 
-    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow');
+    let options: KeycloakInitOptions = this.getProperties('onLoad', 'responseMode', 'checkLoginIframe', 'checkLoginIframeInterval', 'flow', 'silentCheckSsoRedirectUri', 'enableLogging');
 
     options.promiseType = "native";
 
